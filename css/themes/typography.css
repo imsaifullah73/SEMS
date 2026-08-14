@@ -1,0 +1,174 @@
+/* ==========================================================================
+   SEMS — Typography System
+   Depends on: variables.css (font tokens) + light.css/dark.css (semantic
+   color tokens). Must be loaded AFTER those files.
+   ========================================================================== */
+
+html {
+  font-size: 100%; /* 1rem = 16px baseline, respects user's browser settings */
+}
+
+body {
+  font-family: var(--font-body);
+  font-size: var(--font-size-base);
+  font-weight: var(--font-weight-regular);
+  line-height: var(--line-height-normal);
+  color: var(--text-primary);
+  background-color: var(--bg);
+  transition: background-color var(--transition-base), color var(--transition-base);
+}
+
+/* ---------------------------------------------------------------------
+   Headings — Sora, tighter line-height, semibold/bold weights
+--------------------------------------------------------------------- */
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+  font-family: var(--font-display);
+  font-weight: var(--font-weight-semibold);
+  line-height: var(--line-height-tight);
+  color: var(--text-primary);
+  letter-spacing: -0.01em;
+}
+
+h1 {
+  font-size: var(--font-size-4xl);
+  font-weight: var(--font-weight-bold);
+}
+
+h2 {
+  font-size: var(--font-size-3xl);
+}
+
+h3 {
+  font-size: var(--font-size-2xl);
+}
+
+h4 {
+  font-size: var(--font-size-xl);
+}
+
+h5 {
+  font-size: var(--font-size-lg);
+}
+
+h6 {
+  font-size: var(--font-size-md);
+  font-weight: var(--font-weight-semibold);
+}
+
+/* ---------------------------------------------------------------------
+   Body text
+--------------------------------------------------------------------- */
+p {
+  font-size: var(--font-size-base);
+  line-height: var(--line-height-relaxed);
+  color: var(--text-primary);
+}
+
+p + p {
+  margin-top: var(--space-4);
+}
+
+small,
+.text-sm {
+  font-size: var(--font-size-sm);
+}
+
+.text-muted {
+  color: var(--text-muted);
+}
+
+.text-secondary {
+  color: var(--text-secondary);
+}
+
+/* ---------------------------------------------------------------------
+   Links
+--------------------------------------------------------------------- */
+a {
+  color: var(--primary);
+  font-weight: var(--font-weight-medium);
+  transition: color var(--transition-fast);
+}
+
+a:hover {
+  color: var(--primary-hover);
+}
+
+a:focus-visible {
+  outline: none;
+  box-shadow: var(--shadow-focus);
+  border-radius: var(--radius-sm);
+}
+
+/* ---------------------------------------------------------------------
+   Buttons — base typography only (visual button styling comes in
+   components.css during a later phase)
+--------------------------------------------------------------------- */
+button {
+  font-family: var(--font-body);
+  font-size: var(--font-size-sm);
+  font-weight: var(--font-weight-semibold);
+  letter-spacing: 0.01em;
+}
+
+button:focus-visible {
+  outline: none;
+  box-shadow: var(--shadow-focus);
+}
+
+/* ---------------------------------------------------------------------
+   Labels & inputs
+--------------------------------------------------------------------- */
+label {
+  display: inline-block;
+  font-size: var(--font-size-sm);
+  font-weight: var(--font-weight-medium);
+  color: var(--text-secondary);
+  margin-bottom: var(--space-1);
+}
+
+input,
+select,
+textarea {
+  font-family: var(--font-body);
+  font-size: var(--font-size-base);
+  color: var(--text-primary);
+}
+
+input::placeholder,
+textarea::placeholder {
+  color: var(--text-muted);
+}
+
+input:focus-visible,
+select:focus-visible,
+textarea:focus-visible {
+  outline: none;
+  box-shadow: var(--shadow-focus);
+}
+
+/* ---------------------------------------------------------------------
+   Money / amount display — SEMS signature detail.
+   Every rupee amount in the app uses this class: monospace + tabular
+   numerals so figures always align vertically in lists and tables,
+   the way a real ledger or banking app does.
+--------------------------------------------------------------------- */
+.amount {
+  font-family: var(--font-mono);
+  font-variant-numeric: tabular-nums;
+  font-weight: var(--font-weight-medium);
+  letter-spacing: -0.01em;
+}
+
+.amount--positive {
+  color: var(--success);
+}
+
+.amount--negative {
+  color: var(--danger);
+}

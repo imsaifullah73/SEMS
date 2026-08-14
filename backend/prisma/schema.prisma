@@ -1,0 +1,75 @@
+// ==========================================================================
+// SEMS Backend — Prisma Schema
+// Phase 14: adds User model and userId on every other model, so all data
+// is scoped to the account that owns it.
+// ==========================================================================
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model User {
+  id           String     @id @default(cuid())
+  name         String
+  email        String     @unique
+  passwordHash String
+  createdAt    DateTime   @default(now())
+
+  categories   Category[]
+  expenses     Expense[]
+  income       Income[]
+  budgets      Budget[]
+}
+
+model Category {
+  id       String    @id @default(cuid())
+  userId   String
+  user     User      @relation(fields: [userId], references: [id])
+  name     String
+  type     String // "expense" | "income"
+  color    String    @default("#6B7280")
+  expenses Expense[]
+  income   Income[]
+  budgets  Budget[]
+}
+
+model Expense {
+  id          String   @id @default(cuid())
+  userId      String
+  user        User     @relation(fields: [userId], references: [id])
+  categoryId  String
+  category    Category @relation(fields: [categoryId], references: [id])
+  amount      Float
+  description String
+  date        DateTime
+  createdAt   DateTime @default(now())
+}
+
+model Income {
+  id          String   @id @default(cuid())
+  userId      String
+  user        User     @relation(fields: [userId], references: [id])
+  categoryId  String
+  category    Category @relation(fields: [categoryId], references: [id])
+  amount      Float
+  description String
+  date        DateTime
+  createdAt   DateTime @default(now())
+}
+
+model Budget {
+  id         String    @id @default(cuid())
+  userId     String
+  user       User      @relation(fields: [userId], references: [id])
+  categoryId String? // null = overall monthly budget
+  category   Category? @relation(fields: [categoryId], references: [id])
+  amount     Float
+  month      Int
+  year       Int
+  createdAt  DateTime  @default(now())
+}

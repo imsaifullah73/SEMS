@@ -1,0 +1,380 @@
+/* ==========================================================================
+   SEMS — Application Shell Layout
+   Sidebar + Topbar + Main Content + Responsive Behavior
+   Depends on: variables.css, light.css/dark.css, typography.css (must load
+   AFTER those files).
+
+   Breakpoints used here (literal px, per variables.css documentation):
+     mobile:  up to 640px
+     tablet:  641px – 1024px
+     desktop: 1025px and up
+
+   Sidebar behavior:
+   - Mobile/Tablet: off-canvas drawer, opened via a hidden checkbox + label
+     hamburger (CSS-only toggle). Keyboard support for the label is added
+     via SidebarToggle.js (Phase 11) since <label> doesn't respond to
+     Enter/Space activation on its own.
+   - Desktop: always visible, sticky, part of a two-column layout.
+   ========================================================================== */
+
+/* ---------------------------------------------------------------------
+   Accessibility: skip link (visually hidden until focused)
+--------------------------------------------------------------------- */
+.skip-link {
+  position: absolute;
+  top: -48px;
+  left: var(--space-4);
+  background: var(--primary);
+  color: var(--text-on-primary);
+  padding: var(--space-2) var(--space-4);
+  border-radius: var(--radius-sm);
+  z-index: var(--z-tooltip);
+  transition: top var(--transition-fast);
+}
+
+.skip-link:focus {
+  top: var(--space-4);
+}
+
+/* ---------------------------------------------------------------------
+   Sidebar toggle checkbox — visually hidden AND removed from tab order.
+   Phase 11 fix: previously this had aria-hidden="true" while still being
+   keyboard-focusable, which is an accessibility anti-pattern (a hidden
+   element should never be a reachable tab stop). tabindex="-1" removes it
+   from the tab sequence entirely; the visible hamburger label is now the
+   sole keyboard-operable control (see SidebarToggle.js).
+--------------------------------------------------------------------- */
+#sidebar-toggle {
+  position: absolute;
+  opacity: 0;
+  width: 1px;
+  height: 1px;
+  overflow: hidden;
+}
+
+/* ---------------------------------------------------------------------
+   App shell — mobile-first: single column (topbar over main),
+   sidebar is an off-canvas overlay
+--------------------------------------------------------------------- */
+.app-shell {
+  display: flex;
+  flex-direction: column;
+  min-height: 100dvh;
+  background: var(--bg);
+}
+
+.sidebar-backdrop {
+  display: none;
+}
+
+#sidebar-toggle:checked ~ .app-shell .sidebar-backdrop {
+  display: block;
+  position: fixed;
+  inset: 0;
+  background: rgba(11, 14, 26, 0.45);
+  z-index: var(--z-overlay);
+  cursor: pointer;
+}
+
+/* ---------------------------------------------------------------------
+   Sidebar
+--------------------------------------------------------------------- */
+.sidebar {
+  position: fixed;
+  top: 0;
+  left: 0;
+  height: 100dvh;
+  width: 260px;
+  max-width: 80vw;
+  background: var(--surface);
+  border-right: 1px solid var(--border);
+  padding: var(--space-6) var(--space-4);
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-8);
+  transform: translateX(-100%);
+  transition: transform var(--transition-base);
+  z-index: var(--z-modal);
+  overflow-y: auto;
+}
+
+#sidebar-toggle:checked ~ .app-shell .sidebar {
+  transform: translateX(0);
+  box-shadow: var(--shadow-lg);
+}
+
+.sidebar__brand {
+  display: flex;
+  align-items: center;
+  gap: var(--space-2);
+}
+
+.sidebar__brand-mark {
+  width: 32px;
+  height: 32px;
+  border-radius: var(--radius-md);
+  background: var(--primary);
+  color: var(--text-on-primary);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-family: var(--font-display);
+  font-weight: var(--font-weight-bold);
+  font-size: var(--font-size-sm);
+  flex-shrink: 0;
+}
+
+.sidebar__brand-name {
+  font-family: var(--font-display);
+  font-weight: var(--font-weight-bold);
+  font-size: var(--font-size-lg);
+  color: var(--text-primary);
+}
+
+.sidebar__nav {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-1);
+}
+
+.nav-link {
+  display: flex;
+  align-items: center;
+  gap: var(--space-3);
+  padding: var(--space-3) var(--space-3);
+  border-radius: var(--radius-md);
+  color: var(--text-secondary);
+  font-weight: var(--font-weight-medium);
+  font-size: var(--font-size-sm);
+  transition: background-color var(--transition-fast), color var(--transition-fast);
+}
+
+.nav-link:hover {
+  background: var(--surface-alt);
+  color: var(--text-primary);
+}
+
+.nav-link--active {
+  background: var(--primary-subtle);
+  color: var(--primary);
+  font-weight: var(--font-weight-semibold);
+}
+
+.nav-link--active:hover {
+  background: var(--primary-subtle);
+  color: var(--primary);
+}
+
+.nav-icon {
+  width: 20px;
+  height: 20px;
+  flex-shrink: 0;
+  stroke: currentColor;
+  fill: none;
+  stroke-width: 1.8;
+}
+
+.sidebar__footer {
+  margin-top: auto;
+  font-size: var(--font-size-xs);
+  color: var(--text-muted);
+  padding-top: var(--space-4);
+  border-top: 1px solid var(--border);
+}
+
+/* ---------------------------------------------------------------------
+   Content area (topbar + main) — sibling of sidebar
+--------------------------------------------------------------------- */
+.content-area {
+  display: flex;
+  flex-direction: column;
+  flex: 1;
+  min-width: 0; /* prevents flex overflow with long content */
+}
+
+/* ---------------------------------------------------------------------
+   Topbar
+--------------------------------------------------------------------- */
+.topbar {
+  height: 64px;
+  flex-shrink: 0;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--space-4);
+  padding: 0 var(--space-4);
+  background: var(--surface);
+  border-bottom: 1px solid var(--border);
+  position: sticky;
+  top: 0;
+  z-index: var(--z-sticky);
+}
+
+.topbar__left {
+  display: flex;
+  align-items: center;
+  gap: var(--space-3);
+  min-width: 0;
+}
+
+.topbar__title {
+  font-family: var(--font-display);
+  font-size: var(--font-size-md);
+  font-weight: var(--font-weight-semibold);
+  color: var(--text-primary);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.topbar__actions {
+  display: flex;
+  align-items: center;
+  gap: var(--space-3);
+  flex-shrink: 0;
+}
+
+/* Theme toggle button — sun/moon icons swapped by the active data-theme */
+.theme-toggle {
+  width: 36px;
+  height: 36px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: var(--radius-full);
+  border: 1px solid var(--border);
+  background: var(--surface-alt);
+  color: var(--text-secondary);
+  cursor: pointer;
+  transition: background 0.15s ease, color 0.15s ease, border-color 0.15s ease;
+}
+
+.theme-toggle:hover {
+  color: var(--text-primary);
+  border-color: var(--border-strong);
+}
+
+.theme-toggle:focus-visible {
+  outline: none;
+  box-shadow: var(--shadow-focus);
+}
+
+.theme-toggle__icon {
+  width: 18px;
+  height: 18px;
+  fill: currentColor;
+}
+
+.theme-toggle__icon--sun {
+  display: block;
+}
+
+.theme-toggle__icon--moon {
+  display: none;
+}
+
+[data-theme='dark'] .theme-toggle__icon--sun {
+  display: none;
+}
+
+[data-theme='dark'] .theme-toggle__icon--moon {
+  display: block;
+}
+
+/* Hamburger button — built from a <label> + 3 spans, no icon library needed */
+.hamburger-btn {
+  width: 36px;
+  height: 36px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 4px;
+  border-radius: var(--radius-sm);
+  flex-shrink: 0;
+}
+
+.hamburger-btn:hover {
+  background: var(--surface-alt);
+}
+
+.hamburger-btn:focus-visible {
+  outline: none;
+  box-shadow: var(--shadow-focus);
+}
+
+.hamburger-btn .bar {
+  width: 18px;
+  height: 2px;
+  background: var(--text-primary);
+  border-radius: var(--radius-full);
+}
+
+.avatar-placeholder {
+  width: 36px;
+  height: 36px;
+  border-radius: var(--radius-full);
+  background: var(--secondary-subtle);
+  color: var(--secondary-hover);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-family: var(--font-display);
+  font-weight: var(--font-weight-semibold);
+  font-size: var(--font-size-sm);
+  flex-shrink: 0;
+}
+
+/* ---------------------------------------------------------------------
+   Main content
+--------------------------------------------------------------------- */
+.main-content {
+  flex: 1;
+  padding: var(--space-6) var(--space-4);
+}
+
+.main-content__container {
+  max-width: 960px;
+  margin: 0 auto;
+}
+
+/* ---------------------------------------------------------------------
+   Desktop (≥1025px): two-column layout, sidebar always visible & sticky
+--------------------------------------------------------------------- */
+@media (min-width: 1025px) {
+  .app-shell {
+    flex-direction: row;
+  }
+
+  .sidebar {
+    position: sticky;
+    top: 0;
+    left: auto;
+    transform: none;
+    box-shadow: none;
+    flex-shrink: 0;
+  }
+
+  .sidebar-backdrop,
+  #sidebar-toggle:checked ~ .app-shell .sidebar-backdrop {
+    display: none !important;
+  }
+
+  .hamburger-btn {
+    display: none;
+  }
+
+  .main-content {
+    padding: var(--space-8) var(--space-8);
+  }
+}
+
+/* ---------------------------------------------------------------------
+   Tablet (641px – 1024px): keep off-canvas sidebar but give main content
+   a bit more breathing room
+--------------------------------------------------------------------- */
+@media (min-width: 641px) and (max-width: 1024px) {
+  .main-content {
+    padding: var(--space-6) var(--space-6);
+  }
+}

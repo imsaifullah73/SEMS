@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Budget — SEMS</title>
+  <meta name="theme-color" content="#2B3467" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Sora:wght@400;600;700&family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="css/base/reset.css" />
+  <link rel="stylesheet" href="css/base/variables.css" />
+  <link rel="stylesheet" href="css/themes/light.css" />
+  <link rel="stylesheet" href="css/themes/dark.css" />
+  <link rel="stylesheet" href="css/themes/typography.css" />
+  <link rel="stylesheet" href="css/layout.css" />
+  <link rel="stylesheet" href="css/components.css" />
+  <link rel="stylesheet" href="css/pages/budget.css" />
+  <script>
+    (function () {
+      try {
+        var t = localStorage.getItem('sems_theme');
+        if (t === 'light' || t === 'dark') document.documentElement.setAttribute('data-theme', t);
+      } catch (e) {}
+    })();
+  </script>
+</head>
+<body>
+  <a href="#main-content" class="skip-link">Skip to main content</a>
+  <input type="checkbox" id="sidebar-toggle" tabindex="-1" aria-hidden="true" />
+  <div class="app-shell">
+    <label for="sidebar-toggle" class="sidebar-backdrop" aria-hidden="true"></label>
+    <aside class="sidebar" id="app-sidebar">
+      <div class="sidebar__brand">
+        <div class="sidebar__brand-mark">S</div>
+        <span class="sidebar__brand-name">SEMS</span>
+      </div>
+      <nav class="sidebar__nav" aria-label="Main navigation">
+        <a href="index.html" class="nav-link">
+          <svg class="nav-icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M3 13h8V3H3v10zM13 21h8V11h-8v10zM13 3v6h8V3h-8zM3 21h8v-6H3v6z"/></svg>
+          Dashboard
+        </a>
+        <a href="expenses.html" class="nav-link">
+          <svg class="nav-icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M3 6h18M3 12h18M3 18h18"/></svg>
+          Expenses
+        </a>
+        <a href="income.html" class="nav-link">
+          <svg class="nav-icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 2v20M17 5H9.5a3.5 3.5 0 000 7h5a3.5 3.5 0 010 7H6"/></svg>
+          Income
+        </a>
+        <a href="budget.html" class="nav-link nav-link--active" aria-current="page">
+          <svg class="nav-icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M4 4h16v16H4z"/><path d="M4 10h16M10 4v16"/></svg>
+          Budget
+        </a>
+        <a href="categories.html" class="nav-link">
+          <svg class="nav-icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M4 19a2 2 0 002 2h12a2 2 0 002-2V9l-4-6H6a2 2 0 00-2 2z"/><path d="M9 19v-6h6v6"/></svg>
+          Categories
+        </a>
+        <a href="reports.html" class="nav-link">
+          <svg class="nav-icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M4 19V5M4 19h16M8 19v-6M12 19V9M16 19v-4"/></svg>
+          Reports
+        </a>
+      </nav>
+      <div class="sidebar__footer">
+        <button type="button" class="btn btn--neutral" data-action="logout" style="width:100%; margin-bottom: var(--space-2);">Log Out</button>
+        SEMS v0.1 &middot; Phase 15
+      </div>
+    </aside>
+    <div class="content-area">
+      <header class="topbar">
+        <div class="topbar__left">
+          <label for="sidebar-toggle" class="hamburger-btn" aria-label="Toggle sidebar" role="button" tabindex="0" data-sidebar-toggle-label>
+            <span class="bar"></span><span class="bar"></span><span class="bar"></span>
+          </label>
+          <span class="topbar__title">Budget</span>
+        </div>
+        <div class="topbar__actions">
+          <button type="button" class="theme-toggle" data-theme-toggle aria-label="Switch to dark theme" title="Switch to dark theme">
+            <svg class="theme-toggle__icon theme-toggle__icon--sun" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 17a5 5 0 100-10 5 5 0 000 10zM12 1v3M12 20v3M4.2 4.2l2.1 2.1M17.7 17.7l2.1 2.1M1 12h3M20 12h3M4.2 19.8l2.1-2.1M17.7 6.3l2.1-2.1"/></svg>
+            <svg class="theme-toggle__icon theme-toggle__icon--moon" viewBox="0 0 24 24" aria-hidden="true"><path d="M21 12.8A9 9 0 1111.2 3 7 7 0 0021 12.8z"/></svg>
+          </button>
+          <div class="avatar-placeholder" data-user-avatar>SU</div>
+        </div>
+      </header>
+      <main class="main-content" id="main-content">
+        <div class="main-content__container">
+          <div class="page-header">
+            <div>
+              <h1>Budget</h1>
+              <p class="text-secondary">Set spending limits and track them for this month.</p>
+            </div>
+          </div>
+          <div class="budget-layout">
+            <div class="card" data-overall-card><p class="text-muted">Loading budget…</p></div>
+            <div class="card">
+              <div class="section-header">
+                <h3>Category Budgets</h3>
+                <button type="button" class="btn btn--primary" data-action="add-category-budget">+ Set Category Budget</button>
+              </div>
+              <div data-category-budget-list><p class="text-muted" style="padding: var(--space-6) 0;">Loading category budgets…</p></div>
+            </div>
+          </div>
+        </div>
+      </main>
+    </div>
+  </div>
+  <script type="module" src="js/ui/pages/budgetPage.js"></script>
+</body>
+</html>

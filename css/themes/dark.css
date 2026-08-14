@@ -1,0 +1,42 @@
+/* ==========================================================================
+   SEMS — Dark Theme
+   Maps semantic tokens to primitives from variables.css.
+   Active when <html data-theme="dark">.
+   ========================================================================== */
+
+[data-theme='dark'] {
+  /* Surfaces */
+  --bg: var(--color-slate-900);
+  --surface: var(--color-slate-850);
+  --surface-alt: var(--color-slate-800);
+
+  /* Text */
+  --text-primary: var(--color-slate-100);
+  --text-secondary: var(--color-slate-300);
+  --text-muted: var(--color-slate-400);
+  --text-on-primary: var(--color-white);
+  --text-on-secondary: var(--color-slate-900);
+
+  /* Borders */
+  --border: var(--color-slate-700);
+  --border-strong: var(--color-slate-600);
+
+  /* Brand */
+  --primary: var(--color-indigo-400);
+  --primary-hover: var(--color-indigo-300);
+  --primary-subtle: rgba(91, 101, 168, 0.18);
+
+  --secondary: var(--color-gold-400);
+  --secondary-hover: var(--color-gold-500);
+  --secondary-subtle: rgba(212, 160, 23, 0.16);
+
+  /* Status */
+  --success: var(--color-emerald-500);
+  --success-subtle: rgba(31, 157, 92, 0.16);
+  --warning: var(--color-amber-500);
+  --warning-subtle: rgba(217, 119, 6, 0.16);
+  --danger: var(--color-red-500);
+  --danger-subtle: rgba(239, 68, 68, 0.16);
+  --info: var(--color-blue-500);
+  --info-subtle: rgba(59, 130, 246, 0.16);
+}

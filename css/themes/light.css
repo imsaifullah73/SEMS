@@ -1,0 +1,42 @@
+/* ==========================================================================
+   SEMS — Light Theme
+   Maps semantic tokens to primitives from variables.css.
+   Active when <html data-theme="light">.
+   ========================================================================== */
+
+[data-theme='light'] {
+  /* Surfaces */
+  --bg: var(--color-slate-50);
+  --surface: var(--color-white);
+  --surface-alt: var(--color-slate-100);
+
+  /* Text */
+  --text-primary: var(--color-slate-900);
+  --text-secondary: var(--color-slate-500);
+  --text-muted: var(--color-slate-400);
+  --text-on-primary: var(--color-white);
+  --text-on-secondary: var(--color-slate-900);
+
+  /* Borders */
+  --border: var(--color-slate-200);
+  --border-strong: var(--color-slate-300);
+
+  /* Brand */
+  --primary: var(--color-indigo-600);
+  --primary-hover: var(--color-indigo-700);
+  --primary-subtle: var(--color-indigo-100);
+
+  --secondary: var(--color-gold-500);
+  --secondary-hover: var(--color-gold-600);
+  --secondary-subtle: var(--color-gold-100);
+
+  /* Status */
+  --success: var(--color-emerald-600);
+  --success-subtle: var(--color-emerald-100);
+  --warning: var(--color-amber-600);
+  --warning-subtle: var(--color-amber-100);
+  --danger: var(--color-red-600);
+  --danger-subtle: var(--color-red-100);
+  --info: var(--color-blue-600);
+  --info-subtle: var(--color-blue-100);
+}

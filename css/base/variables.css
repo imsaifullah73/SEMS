@@ -1,0 +1,161 @@
+/* ==========================================================================
+   SEMS — Design Tokens (Primitives)
+   These are the raw palette + scale values. Theme files (light.css / dark.css)
+   remap a subset of these primitives into SEMANTIC variables like --bg,
+   --text-primary, --primary, etc. Components should only ever reference the
+   SEMANTIC variables from the theme files — never these primitives directly —
+   so that switching themes never requires touching component CSS.
+   ========================================================================== */
+
+:root {
+  /* ---------------------------------------------------------------------
+     Brand palette
+     Primary  = Indigo Ink   (trust, structure, "the ledger")
+     Secondary= Coin Gold    (value, highlights, calls to action)
+  --------------------------------------------------------------------- */
+  --color-indigo-900: #1A2047;
+  --color-indigo-700: #232C5E;
+  --color-indigo-600: #2B3467;
+  --color-indigo-500: #3B4583;
+  --color-indigo-400: #5B65A8;
+  --color-indigo-300: #8890C7;
+  --color-indigo-100: #E4E6F5;
+
+  --color-gold-700: #A8790F;
+  --color-gold-600: #C28E14;
+  --color-gold-500: #D4A017;
+  --color-gold-400: #E3B94A;
+  --color-gold-100: #FBF0D6;
+
+  /* ---------------------------------------------------------------------
+     Semantic status palette (success / warning / danger / info)
+  --------------------------------------------------------------------- */
+  --color-emerald-700: #0F6B44;
+  --color-emerald-600: #15803D;
+  --color-emerald-500: #1F9D5C;
+  --color-emerald-100: #DCFCE7;
+
+  --color-amber-700: #92400E;
+  --color-amber-600: #B45309;
+  --color-amber-500: #D97706;
+  --color-amber-100: #FEF3C7;
+
+  --color-red-700: #991B1B;
+  --color-red-600: #DC2626;
+  --color-red-500: #EF4444;
+  --color-red-100: #FEE2E2;
+
+  --color-blue-700: #1D4ED8;
+  --color-blue-600: #2563EB;
+  --color-blue-500: #3B82F6;
+  --color-blue-100: #DBEAFE;
+
+  /* ---------------------------------------------------------------------
+     Neutral / slate scale — used for backgrounds, surfaces, text, borders
+  --------------------------------------------------------------------- */
+  --color-slate-950: #0B0E1A;
+  --color-slate-900: #10131F;
+  --color-slate-850: #171B2C;
+  --color-slate-800: #1E2338;
+  --color-slate-700: #2A3049;
+  --color-slate-600: #3D4462;
+  --color-slate-500: #6B7280;
+  --color-slate-400: #9CA3AF;
+  --color-slate-300: #CBD1DC;
+  --color-slate-200: #E2E4ED;
+  --color-slate-100: #F1F2F7;
+  --color-slate-50:  #F6F7FB;
+  --color-white: #FFFFFF;
+  --color-black: #000000;
+
+  /* ---------------------------------------------------------------------
+     Typography
+     Display = Sora        (headings — geometric, confident)
+     Body    = Inter        (UI text, paragraphs, labels — highly legible)
+     Mono    = JetBrains Mono (money amounts — tabular numerals, "ledger" feel)
+  --------------------------------------------------------------------- */
+  --font-display: 'Sora', 'Segoe UI', sans-serif;
+  --font-body: 'Inter', 'Segoe UI', sans-serif;
+  --font-mono: 'JetBrains Mono', 'Courier New', monospace;
+
+  --font-size-xs: 0.75rem;    /* 12px */
+  --font-size-sm: 0.875rem;   /* 14px */
+  --font-size-base: 1rem;     /* 16px */
+  --font-size-md: 1.125rem;   /* 18px */
+  --font-size-lg: 1.25rem;    /* 20px */
+  --font-size-xl: 1.5rem;     /* 24px */
+  --font-size-2xl: 1.875rem;  /* 30px */
+  --font-size-3xl: 2.25rem;   /* 36px */
+  --font-size-4xl: 3rem;      /* 48px */
+
+  --font-weight-regular: 400;
+  --font-weight-medium: 500;
+  --font-weight-semibold: 600;
+  --font-weight-bold: 700;
+
+  --line-height-tight: 1.2;
+  --line-height-snug: 1.35;
+  --line-height-normal: 1.5;
+  --line-height-relaxed: 1.65;
+
+  /* ---------------------------------------------------------------------
+     Spacing scale (4px base unit)
+  --------------------------------------------------------------------- */
+  --space-1: 0.25rem;   /* 4px */
+  --space-2: 0.5rem;    /* 8px */
+  --space-3: 0.75rem;   /* 12px */
+  --space-4: 1rem;      /* 16px */
+  --space-5: 1.25rem;   /* 20px */
+  --space-6: 1.5rem;    /* 24px */
+  --space-8: 2rem;      /* 32px */
+  --space-10: 2.5rem;   /* 40px */
+  --space-12: 3rem;     /* 48px */
+  --space-16: 4rem;     /* 64px */
+
+  /* ---------------------------------------------------------------------
+     Radius
+  --------------------------------------------------------------------- */
+  --radius-sm: 6px;
+  --radius-md: 10px;
+  --radius-lg: 14px;
+  --radius-xl: 20px;
+  --radius-full: 999px;
+
+  /* ---------------------------------------------------------------------
+     Shadows — cool-toned (indigo-tinted), not pure black
+  --------------------------------------------------------------------- */
+  --shadow-sm: 0 1px 2px rgba(26, 32, 71, 0.06);
+  --shadow-md: 0 4px 12px rgba(26, 32, 71, 0.08);
+  --shadow-lg: 0 12px 32px rgba(26, 32, 71, 0.14);
+  --shadow-focus: 0 0 0 3px rgba(212, 160, 23, 0.35);
+
+  /* ---------------------------------------------------------------------
+     Transitions
+  --------------------------------------------------------------------- */
+  --transition-fast: 120ms ease;
+  --transition-base: 200ms ease;
+  --transition-slow: 320ms ease;
+
+  /* ---------------------------------------------------------------------
+     Z-index scale
+  --------------------------------------------------------------------- */
+  --z-base: 0;
+  --z-dropdown: 100;
+  --z-sticky: 200;
+  --z-overlay: 300;
+  --z-modal: 400;
+  --z-toast: 500;
+  --z-tooltip: 600;
+
+  /* ---------------------------------------------------------------------
+     Breakpoints (documentation reference only).
+     CSS custom properties cannot be used inside @media conditions, so
+     future CSS files must use the literal px values below directly:
+       mobile:  up to 640px
+       tablet:  641px – 1024px
+       desktop: 1025px and up
+  --------------------------------------------------------------------- */
+  --breakpoint-sm: 640px;
+  --breakpoint-md: 1024px;
+  --breakpoint-lg: 1280px;
+}

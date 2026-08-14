@@ -1,0 +1,34 @@
+/* ==========================================================================
+   SEMS — Expenses Page
+   Page-specific layout only. .page-header moved to components.css in
+   Phase 9 (was duplicated across pages).
+   ========================================================================== */
+
+.summary-card {
+  margin-bottom: var(--space-6);
+}
+
+[data-expenses-list] {
+  overflow-x: auto;
+}
+
+.filter-card {
+  margin-bottom: var(--space-6);
+}
+
+.expenses-filters {
+  display: flex;
+  align-items: center;
+  gap: var(--space-3);
+  flex-wrap: wrap;
+}
+
+.expenses-filters__field--search {
+  flex: 1 1 220px;
+  min-width: 200px;
+}
+
+.expenses-filters__field select,
+.expenses-filters__field input[type="month"] {
+  min-width: 180px;
+}

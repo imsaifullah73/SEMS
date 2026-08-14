@@ -1,0 +1,55 @@
+/* ==========================================================================
+   SEMS — Budget Page
+   Page-specific layout only. Reusable pieces (card, badge, buttons, modal,
+   form, progress-bar) live in components.css.
+   ========================================================================== */
+
+.page-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--space-4);
+  flex-wrap: wrap;
+  margin-bottom: var(--space-6);
+}
+
+.budget-layout {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: var(--space-6);
+}
+
+@media (min-width: 1025px) {
+  .budget-layout {
+    grid-template-columns: 320px 1fr;
+    align-items: start;
+  }
+}
+
+.section-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: var(--space-4);
+}
+
+.budget-row {
+  padding: var(--space-4) 0;
+  border-bottom: 1px solid var(--border);
+}
+.budget-row:last-child {
+  border-bottom: none;
+}
+
+.budget-row__top {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--space-3);
+  flex-wrap: wrap;
+}
+
+.budget-row__actions {
+  display: flex;
+  gap: var(--space-2);
+}

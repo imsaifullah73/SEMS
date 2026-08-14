@@ -1,0 +1,16 @@
+/* ==========================================================================
+   SEMS — Dashboard Page
+   Page-specific layout only. .page-header, .section-header, and .stats-grid
+   moved to components.css in Phase 9 (now shared with the Reports page).
+   ========================================================================== */
+
+.quick-actions {
+  display: flex;
+  gap: var(--space-3);
+  flex-wrap: wrap;
+  margin-bottom: var(--space-8);
+}
+
+[data-dash="recent-list"] {
+  overflow-x: auto;
+}
