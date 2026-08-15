@@ -37,7 +37,6 @@ function persistSession(data) {
 export const AuthService = {
   async register({ name, email, password }) {
     const result = await postAuth('/auth/register', { name, email, password });
-    if (result.success) persistSession(result.data);
     return result;
   },
 
