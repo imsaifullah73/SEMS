@@ -10,6 +10,7 @@ import routes from './routes/index.js';
 import authRoutes from './routes/authRoutes.js';
 import { notFound } from './middleware/notFound.js';
 import { errorHandler } from './middleware/errorHandler.js';
+import { config } from './config/env.js';
 
 const app = express();
 
@@ -22,6 +23,17 @@ app.get('/', (req, res) => {
 
 app.get('/api/health', (req, res) => {
   res.json({ status: 'ok' });
+});
+
+app.get('/api/diag/email', (req, res) => {
+  const c = config;
+  res.json({
+    serviceSet: Boolean(c.emailjsServiceId),
+    otpTemplateSet: Boolean(c.emailjsOtpTemplateId),
+    welcomeTemplateSet: Boolean(c.emailjsWelcomeTemplateId),
+    publicKeySet: Boolean(c.emailjsPublicKey),
+    privateKeySet: Boolean(c.emailjsPrivateKey),
+  });
 });
 
 app.use('/api/auth', authRoutes);
