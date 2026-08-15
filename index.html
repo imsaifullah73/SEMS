@@ -3,20 +3,19 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Dashboard — SEMS</title>
-  <meta name="description" content="Your student finance overview — income, expenses, and remaining budget at a glance." />
+  <title>Welcome — SEMS</title>
+  <meta name="description" content="SEMS — Student Expense Management System. Track income, expenses, budgets and reports. Built by Saif Ullah." />
   <meta name="theme-color" content="#2B3467" />
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <link href="https://fonts.googleapis.com/css2?family=Sora:wght@400;600;700&family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet" />
+  <link href="https://fonts.googleapis.com/css2?family=Sora:wght@400;600;700;800&family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet" />
   <link rel="stylesheet" href="css/base/reset.css" />
   <link rel="stylesheet" href="css/base/variables.css" />
   <link rel="stylesheet" href="css/themes/light.css" />
   <link rel="stylesheet" href="css/themes/dark.css" />
   <link rel="stylesheet" href="css/themes/typography.css" />
-  <link rel="stylesheet" href="css/layout.css" />
   <link rel="stylesheet" href="css/components.css" />
-  <link rel="stylesheet" href="css/pages/dashboard.css" />
+  <link rel="stylesheet" href="css/pages/landing.css" />
   <script>
     (function () {
       try {
@@ -27,95 +26,170 @@
   </script>
 </head>
 <body>
-  <a href="#main-content" class="skip-link">Skip to main content</a>
-  <input type="checkbox" id="sidebar-toggle" tabindex="-1" aria-hidden="true" />
-  <div class="app-shell">
-    <label for="sidebar-toggle" class="sidebar-backdrop" aria-hidden="true"></label>
-    <aside class="sidebar" id="app-sidebar">
-      <div class="sidebar__brand">
+  <header class="landing-nav">
+    <div class="landing-nav__inner">
+      <a class="landing-nav__brand" href="index.html">
         <div class="sidebar__brand-mark">S</div>
         <span class="sidebar__brand-name">SEMS</span>
-      </div>
-      <nav class="sidebar__nav" aria-label="Main navigation">
-        <a href="index.html" class="nav-link nav-link--active" aria-current="page">
-          <svg class="nav-icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M3 13h8V3H3v10zM13 21h8V11h-8v10zM13 3v6h8V3h-8zM3 21h8v-6H3v6z"/></svg>
-          Dashboard
-        </a>
-        <a href="expenses.html" class="nav-link">
-          <svg class="nav-icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M3 6h18M3 12h18M3 18h18"/></svg>
-          Expenses
-        </a>
-        <a href="income.html" class="nav-link">
-          <svg class="nav-icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 2v20M17 5H9.5a3.5 3.5 0 000 7h5a3.5 3.5 0 010 7H6"/></svg>
-          Income
-        </a>
-        <a href="budget.html" class="nav-link">
-          <svg class="nav-icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M4 4h16v16H4z"/><path d="M4 10h16M10 4v16"/></svg>
-          Budget
-        </a>
-        <a href="categories.html" class="nav-link">
-          <svg class="nav-icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M4 19a2 2 0 002 2h12a2 2 0 002-2V9l-4-6H6a2 2 0 00-2 2z"/><path d="M9 19v-6h6v6"/></svg>
-          Categories
-        </a>
-        <a href="reports.html" class="nav-link">
-          <svg class="nav-icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M4 19V5M4 19h16M8 19v-6M12 19V9M16 19v-4"/></svg>
-          Reports
-        </a>
+      </a>
+      <nav class="landing-nav__links" aria-label="Landing navigation">
+        <a href="#features">Features</a>
+        <a href="#benefits">Benefits</a>
+        <a href="#about">About</a>
+        <a href="#comments">Feedback</a>
       </nav>
-      <div class="sidebar__footer">
-        <button type="button" class="btn btn--neutral" data-action="logout" style="width:100%; margin-bottom: var(--space-2);">Log Out</button>
-        SEMS v0.1 &middot; Phase 15
+      <div class="landing-nav__actions">
+        <button type="button" class="theme-toggle" data-theme-toggle aria-label="Switch to dark theme" title="Switch to dark theme">
+          <svg class="theme-toggle__icon theme-toggle__icon--sun" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 17a5 5 0 100-10 5 5 0 000 10zM12 1v3M12 20v3M4.2 4.2l2.1 2.1M17.7 17.7l2.1 2.1M1 12h3M20 12h3M4.2 19.8l2.1-2.1M17.7 6.3l2.1-2.1"/></svg>
+          <svg class="theme-toggle__icon theme-toggle__icon--moon" viewBox="0 0 24 24" aria-hidden="true"><path d="M21 12.8A9 9 0 1111.2 3 7 7 0 0021 12.8z"/></svg>
+        </button>
+        <a href="login.html" class="btn btn--ghost">Log In</a>
+        <a href="register.html" class="btn btn--primary">Get Started</a>
       </div>
-    </aside>
-    <div class="content-area">
-      <header class="topbar">
-        <div class="topbar__left">
-          <label for="sidebar-toggle" class="hamburger-btn" aria-label="Toggle sidebar" role="button" tabindex="0" data-sidebar-toggle-label>
-            <span class="bar"></span><span class="bar"></span><span class="bar"></span>
-          </label>
-          <span class="topbar__title">Dashboard</span>
-        </div>
-        <div class="topbar__actions">
-          <button type="button" class="theme-toggle" data-theme-toggle aria-label="Switch to dark theme" title="Switch to dark theme">
-            <svg class="theme-toggle__icon theme-toggle__icon--sun" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 17a5 5 0 100-10 5 5 0 000 10zM12 1v3M12 20v3M4.2 4.2l2.1 2.1M17.7 17.7l2.1 2.1M1 12h3M20 12h3M4.2 19.8l2.1-2.1M17.7 6.3l2.1-2.1"/></svg>
-            <svg class="theme-toggle__icon theme-toggle__icon--moon" viewBox="0 0 24 24" aria-hidden="true"><path d="M21 12.8A9 9 0 1111.2 3 7 7 0 0021 12.8z"/></svg>
-          </button>
-          <div class="avatar-placeholder" data-user-avatar>SU</div>
-        </div>
-      </header>
-      <main class="main-content" id="main-content">
-        <div class="main-content__container">
-          <h1 data-dash="greeting" style="margin-bottom: var(--space-1);">Welcome back</h1>
-          <p class="text-secondary" style="margin-bottom: var(--space-6);">Here's your financial overview for this month.</p>
-          <div class="stats-grid">
-            <div class="card">
-              <p class="stat-card__label">Total Income</p>
-              <span class="amount amount--positive stat-card__value" data-dash="total-income">—</span>
-              <p class="stat-card__note">This month</p>
-            </div>
-            <div class="card">
-              <p class="stat-card__label">Total Expenses</p>
-              <span class="amount amount--negative stat-card__value" data-dash="total-expenses">—</span>
-              <p class="stat-card__note">This month</p>
-            </div>
-            <div class="card">
-              <p class="stat-card__label">Remaining Budget</p>
-              <span class="amount amount--positive stat-card__value" data-dash="remaining-budget">—</span>
-              <p class="stat-card__note" data-dash="remaining-note">Left over this month</p>
-            </div>
-          </div>
-          <div class="quick-actions">
-            <a href="expenses.html" class="btn btn--primary">+ Add Expense</a>
-            <a href="income.html" class="btn btn--secondary">+ Add Income</a>
-          </div>
-          <div class="card">
-            <div class="section-header"><h3>Recent Activity</h3></div>
-            <div data-dash="recent-list"><p class="text-muted" style="padding: var(--space-6) 0;">Loading activity…</p></div>
-          </div>
-        </div>
-      </main>
     </div>
-  </div>
-  <script type="module" src="js/ui/pages/dashboardPage.js"></script>
+  </header>
+
+  <main>
+    <!-- Hero -->
+    <section class="landing-hero">
+      <div class="landing-hero__inner">
+        <p class="landing-hero__eyebrow">Student Expense Management System</p>
+        <h1 class="landing-hero__title">Take control of your money.<br /><span>Know where every rupee goes.</span></h1>
+        <p class="landing-hero__subtitle">SEMS helps students track income, expenses, budgets and reports in one simple, beautiful dashboard — so you can focus on your studies, not your stress.</p>
+        <div class="landing-hero__cta">
+          <a href="register.html" class="btn btn--primary btn--lg">Start Tracking Free</a>
+          <a href="#features" class="btn btn--secondary btn--lg">See Features</a>
+        </div>
+        <div class="landing-hero__stats">
+          <div class="stat-card--mini"><strong data-count="100">100</strong><span>Students</span></div>
+          <div class="stat-card--mini"><strong>24/7</strong><span>Available</span></div>
+          <div class="stat-card--mini"><strong>100%</strong><span>Free</span></div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Features -->
+    <section class="landing-section" id="features">
+      <div class="landing-section__inner">
+        <p class="landing-section__eyebrow">Everything you need</p>
+        <h2 class="landing-section__title">Features built for students</h2>
+        <div class="feature-grid">
+          <div class="card feature-card">
+            <div class="feature-card__icon">💰</div>
+            <h3>Track Expenses</h3>
+            <p>Record every purchase in seconds. Categorize and never wonder where your money went again.</p>
+          </div>
+          <div class="card feature-card">
+            <div class="feature-card__icon">📈</div>
+            <h3>Manage Income</h3>
+            <p>Keep tabs on pocket money, part-time jobs and scholarships all in one place.</p>
+          </div>
+          <div class="card feature-card">
+            <div class="feature-card__icon">🎯</div>
+            <h3>Smart Budgets</h3>
+            <p>Set monthly limits per category and see your remaining budget at a glance.</p>
+          </div>
+          <div class="card feature-card">
+            <div class="feature-card__icon">📊</div>
+            <h3>Clear Reports</h3>
+            <p>Understand your spending habits with simple, visual reports you can actually read.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Benefits -->
+    <section class="landing-section landing-section--alt" id="benefits">
+      <div class="landing-section__inner">
+        <p class="landing-section__eyebrow">Why SEMS</p>
+        <h2 class="landing-section__title">Benefits that actually matter</h2>
+        <div class="benefit-list">
+          <div class="benefit-row">
+            <span class="benefit-row__check">✓</span>
+            <div><h3>Stop forgetting expenses</h3><p>No more guessing at the end of the month. Everything is recorded, automatically organized.</p></div>
+          </div>
+          <div class="benefit-row">
+            <span class="benefit-row__check">✓</span>
+            <div><h3>Build real financial discipline</h3><p>See your habits clearly and make smarter money choices while it's easy to change them.</p></div>
+          </div>
+          <div class="benefit-row">
+            <span class="benefit-row__check">✓</span>
+            <div><h3>100% free & always accessible</h3><p>Available from any device, wherever you are. Your data, always yours.</p></div>
+          </div>
+          <div class="benefit-row">
+            <span class="benefit-row__check">✓</span>
+            <div><h3>Simple enough for anyone</h3><p>No confusing finance terms. A clean interface that just works.</p></div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- About / Owner -->
+    <section class="landing-section" id="about">
+      <div class="landing-section__inner">
+        <div class="about-card card">
+          <div class="about-card__mark">SU</div>
+          <div class="about-card__body">
+            <p class="landing-section__eyebrow">About the creator</p>
+            <h2 class="landing-section__title">Built by Saif Ullah</h2>
+            <p class="about-card__story">
+              I know exactly how it feels when the month ends and you have no idea where your money went.
+              I used to forget my daily expenses — small amounts that added up quietly and vanished.
+              So I decided to build something that would help me — and people like me — stay on top of their money.
+              I created SEMS because I believe everyone deserves to feel in control of their finances.
+              I hope this software brings you real benefit, just like it has for me.
+            </p>
+            <a href="register.html" class="btn btn--primary">Try SEMS Today</a>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Comments / Feedback -->
+    <section class="landing-section landing-section--alt" id="comments">
+      <div class="landing-section__inner">
+        <p class="landing-section__eyebrow">Feedback</p>
+        <h2 class="landing-section__title">What people are saying</h2>
+
+        <!-- Testimonials -->
+        <div class="testimonial-grid" data-testimonials>
+          <div class="card testimonial-card"><p>Loading testimonials…</p></div>
+        </div>
+
+        <!-- Comment form -->
+        <div class="card comment-form-card">
+          <h3>How do you like SEMS?</h3>
+          <p class="text-secondary">Tell me how the software feels, or suggest a change — I read every comment and reply!</p>
+          <p class="auth-error" data-comment-error></p>
+          <form class="form" data-comment-form novalidate>
+            <div class="form-group">
+              <label for="comment-author">Your name</label>
+              <input id="comment-author" name="author" type="text" class="form-input" maxlength="60" required />
+            </div>
+            <div class="form-group">
+              <label for="comment-text">Your feedback</label>
+              <textarea id="comment-text" name="text" class="form-input" rows="4" maxlength="500" required></textarea>
+            </div>
+            <button type="submit" class="btn btn--primary" data-comment-submit>Post Comment</button>
+          </form>
+        </div>
+
+        <!-- Comment list -->
+        <div class="comment-list" data-comment-list>
+          <p class="text-muted">Loading comments…</p>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer class="landing-footer">
+    <div class="landing-footer__inner">
+      <span>© <span data-year>2026</span> SEMS — Built with ❤ by Saif Ullah</span>
+      <a href="login.html">Log In</a>
+      <a href="register.html">Create Account</a>
+    </div>
+  </footer>
+
+  <script type="module" src="js/ui/pages/landingPage.js"></script>
 </body>
 </html>

@@ -6,11 +6,32 @@
    ========================================================================== */
 
 import bcrypt from 'bcryptjs';
+import crypto from 'crypto';
 import { prisma } from '../config/prismaClient.js';
 import { generateToken } from '../utils/generateToken.js';
 import { DEFAULT_CATEGORIES } from '../utils/defaultCategories.js';
+import { sendOtpEmail } from '../utils/mailer.js';
+import { config } from '../config/env.js';
 
 const EMAIL_REGEX = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+
+function generateOtp() {
+  return crypto.randomInt(100000, 1000000).toString();
+}
+
+async function issueOtp(user) {
+  const otp = generateOtp();
+  const otpHash = await bcrypt.hash(otp, 10);
+  const otpExpiresAt = new Date(Date.now() + config.otpTtlMinutes * 60 * 1000);
+
+  await prisma.user.update({
+    where: { id: user.id },
+    data: { otpHash, otpExpiresAt },
+  });
+
+  await sendOtpEmail(user.email, otp);
+  return otp;
+}
 
 function sanitizeUser(user) {
   const { passwordHash, ...safeUser } = user;
@@ -56,8 +77,13 @@ export async function register(req, res, next) {
       data: DEFAULT_CATEGORIES.map((c) => ({ ...c, userId: user.id })),
     });
 
-    const token = generateToken(user.id);
-    res.status(201).json({ user: sanitizeUser(user), token });
+    await issueOtp(user);
+
+    res.status(201).json({
+      message: 'Account created. A verification code has been sent to your email.',
+      requiresVerification: true,
+      email: user.email,
+    });
   } catch (error) {
     next(error);
   }
@@ -81,8 +107,84 @@ export async function login(req, res, next) {
       return res.status(401).json({ error: 'Invalid email or password.' });
     }
 
-    const token = generateToken(user.id);
+    if (!user.emailVerified) {
+      return res.status(403).json({
+        error: 'Please verify your email first.',
+        requiresVerification: true,
+        email: user.email,
+      });
+    }
+
+    const token = generateToken(user.id, user.email);
     res.json({ user: sanitizeUser(user), token });
+  } catch (error) {
+    next(error);
+  }
+}
+
+export async function verifyOtp(req, res, next) {
+  try {
+    const { email, otp } = req.body;
+
+    if (!email || !otp) {
+      return res.status(400).json({ error: 'Email and verification code are required.' });
+    }
+
+    const user = await prisma.user.findUnique({ where: { email: email.toLowerCase().trim() } });
+    if (!user) {
+      return res.status(404).json({ error: 'No account found for this email.' });
+    }
+
+    if (user.emailVerified) {
+      const token = generateToken(user.id, user.email);
+      return res.json({ user: sanitizeUser(user), token });
+    }
+
+    if (!user.otpHash || !user.otpExpiresAt) {
+      return res.status(400).json({ error: 'No verification code pending. Please register again.' });
+    }
+
+    if (user.otpExpiresAt < new Date()) {
+      return res.status(400).json({ error: 'This verification code has expired. Please request a new one.' });
+    }
+
+    const otpMatches = await bcrypt.compare(otp, user.otpHash);
+    if (!otpMatches) {
+      return res.status(400).json({ error: 'Incorrect verification code.' });
+    }
+
+    await prisma.user.update({
+      where: { id: user.id },
+      data: { emailVerified: true, otpHash: null, otpExpiresAt: null },
+    });
+
+    const verified = await prisma.user.findUnique({ where: { id: user.id } });
+    const token = generateToken(user.id, user.email);
+    res.json({ user: sanitizeUser(verified), token });
+  } catch (error) {
+    next(error);
+  }
+}
+
+export async function resendOtp(req, res, next) {
+  try {
+    const { email } = req.body;
+
+    if (!email) {
+      return res.status(400).json({ error: 'Email is required.' });
+    }
+
+    const user = await prisma.user.findUnique({ where: { email: email.toLowerCase().trim() } });
+    if (!user) {
+      return res.status(404).json({ error: 'No account found for this email.' });
+    }
+
+    if (user.emailVerified) {
+      return res.status(400).json({ error: 'This email is already verified.' });
+    }
+
+    await issueOtp(user);
+    res.json({ message: 'A new verification code has been sent to your email.' });
   } catch (error) {
     next(error);
   }

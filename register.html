@@ -38,6 +38,8 @@
       <h2 style="text-align:center; margin-bottom: var(--space-1);">Create your account</h2>
       <p class="text-secondary" style="text-align:center; margin-bottom: var(--space-6);">Start tracking your student finances</p>
 
+      <p class="auth-error" data-auth-error></p>
+
       <form class="form" data-register-form novalidate>
         <div class="form-group">
           <label for="register-name">Name</label>
@@ -55,6 +57,16 @@
           <p class="form-error" data-error-for="password"></p>
         </div>
         <button type="submit" class="btn btn--primary" style="width:100%;">Create Account</button>
+      </form>
+
+      <form class="form" data-otp-form hidden>
+        <p class="text-secondary" data-otp-hint></p>
+        <div class="form-group">
+          <label for="register-otp">Verification code</label>
+          <input id="register-otp" name="otp" type="text" class="form-input" inputmode="numeric" maxlength="6" required />
+        </div>
+        <button type="submit" class="btn btn--primary" style="width:100%;">Verify Email</button>
+        <button type="button" class="btn btn--secondary" style="width:100%; margin-top: var(--space-2);" data-resend-otp>Resend code</button>
       </form>
 
       <p class="auth-switch">Already have an account? <a href="login.html">Log in</a></p>

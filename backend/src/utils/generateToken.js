@@ -8,6 +8,7 @@
 import jwt from 'jsonwebtoken';
 import { config } from '../config/env.js';
 
-export function generateToken(userId) {
-  return jwt.sign({ id: userId }, config.jwtSecret, { expiresIn: '7d' });
+export function generateToken(userId, email) {
+  const payload = email ? { id: userId, email } : { id: userId };
+  return jwt.sign(payload, config.jwtSecret, { expiresIn: '7d' });
 }

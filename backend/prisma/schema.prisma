@@ -14,11 +14,14 @@ datasource db {
 }
 
 model User {
-  id           String     @id @default(cuid())
-  name         String
-  email        String     @unique
-  passwordHash String
-  createdAt    DateTime   @default(now())
+  id             String     @id @default(cuid())
+  name           String
+  email          String     @unique
+  passwordHash   String
+  emailVerified  Boolean    @default(false)
+  otpHash        String?
+  otpExpiresAt   DateTime?
+  createdAt      DateTime   @default(now())
 
   categories   Category[]
   expenses     Expense[]
@@ -72,4 +75,17 @@ model Budget {
   month      Int
   year       Int
   createdAt  DateTime  @default(now())
+}
+
+model Comment {
+  id        String    @id @default(cuid())
+  author    String
+  text      String
+  isOwner   Boolean   @default(false) // true = testimonial from founder
+  isReply   Boolean   @default(false)
+  parentId  String?
+  blocked   Boolean   @default(false)
+  createdAt DateTime  @default(now())
+  replies   Comment[] @relation("CommentReplies")
+  parent    Comment?  @relation("CommentReplies", fields: [parentId], references: [id])
 }

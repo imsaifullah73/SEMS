@@ -19,7 +19,12 @@ async function postAuth(path, body) {
   const data = await res.json().catch(() => ({}));
 
   if (!res.ok) {
-    return { success: false, errors: data.errors || { general: [data.error || 'Something went wrong.'] } };
+    return {
+      success: false,
+      errors: data.errors || { general: [data.error || 'Something went wrong.'] },
+      requiresVerification: Boolean(data.requiresVerification),
+      email: data.email || '',
+    };
   }
   return { success: true, data };
 }
@@ -40,6 +45,16 @@ export const AuthService = {
     const result = await postAuth('/auth/login', { email, password });
     if (result.success) persistSession(result.data);
     return result;
+  },
+
+  async verifyOtp({ email, otp }) {
+    const result = await postAuth('/auth/verify-otp', { email, otp });
+    if (result.success) persistSession(result.data);
+    return result;
+  },
+
+  async resendOtp(email) {
+    return postAuth('/auth/resend-otp', { email });
   },
 
   logout() {

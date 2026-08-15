@@ -52,6 +52,16 @@
         <button type="submit" class="btn btn--primary" style="width:100%;">Log In</button>
       </form>
 
+      <form class="form" data-otp-form hidden>
+        <p class="text-secondary" data-otp-hint></p>
+        <div class="form-group">
+          <label for="login-otp">Verification code</label>
+          <input id="login-otp" name="otp" type="text" class="form-input" inputmode="numeric" maxlength="6" required />
+        </div>
+        <button type="submit" class="btn btn--primary" style="width:100%;">Verify Email</button>
+        <button type="button" class="btn btn--secondary" style="width:100%; margin-top: var(--space-2);" data-resend-otp>Resend code</button>
+      </form>
+
       <p class="auth-switch">Don't have an account? <a href="register.html">Create one</a></p>
     </div>
   </div>
