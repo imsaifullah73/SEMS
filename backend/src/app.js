@@ -36,6 +36,16 @@ app.get('/api/diag/email', (req, res) => {
   });
 });
 
+app.get('/api/diag/email-test', async (req, res) => {
+  try {
+    const { sendOtpEmail } = await import('./utils/mailer.js');
+    await sendOtpEmail('imsaifullah73@gmail.com', '000000');
+    res.json({ ok: true, message: 'Email sent' });
+  } catch (error) {
+    res.json({ ok: false, error: error.message });
+  }
+});
+
 app.use('/api/auth', authRoutes);
 app.use('/api', routes);
 
