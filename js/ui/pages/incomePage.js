@@ -8,7 +8,7 @@ import { confirmDialog } from '../components/ConfirmDialog.js';
 import { initSidebarToggle } from '../components/SidebarToggle.js';
 import { initThemeToggle } from '../components/ThemeToggle.js';
 import { requireAuth, renderUserAvatar, wireLogoutButton } from '../components/AuthGuard.js';
-import { formatCurrency, formatDate, qs, qsa, log, skeletonRowsHtml, errorBannerHtml, debounce, todayLocalDateString } from '../../core/utils.js';
+import { formatCurrency, formatDate, formatDateTime, qs, qsa, log, skeletonRowsHtml, errorBannerHtml, debounce, todayLocalDateString } from '../../core/utils.js';
 
 const storageAdapter = new ApiAdapter();
 const categoryRepository = new CategoryRepository(storageAdapter);
@@ -69,7 +69,7 @@ function renderIncomeTable(entries, hasAnyIncome = allIncomeEntries.length > 0) 
     <tr data-income-id="${entry.id}">
       <td><span class="badge" style="--badge-color: ${entry.category ? entry.category.color : '#6B7280'};">${entry.category ? entry.category.name : 'Uncategorized'}</span></td>
       <td>${entry.description}</td>
-      <td class="text-muted text-sm">${formatDate(entry.date)}</td>
+      <td class="text-muted text-sm">${entry.createdAt ? formatDateTime(entry.createdAt) : formatDate(entry.date)}</td>
       <td class="amount amount--positive" style="text-align:right;">${formatCurrency(entry.amount)}</td>
       <td style="text-align:right; white-space:nowrap;">
         <button type="button" class="icon-btn" data-action="edit" aria-label="Edit income">Edit</button>
@@ -82,7 +82,7 @@ function renderIncomeTable(entries, hasAnyIncome = allIncomeEntries.length > 0) 
 
   listEl.innerHTML = `
     <table class="table">
-      <thead><tr><th>Source</th><th>Description</th><th>Date</th><th style="text-align:right;">Amount</th><th></th></tr></thead>
+      <thead><tr><th>Source</th><th>Description</th><th>Date &amp; Time</th><th style="text-align:right;">Amount</th><th></th></tr></thead>
       <tbody>${rows}</tbody>
     </table>
   `;

@@ -59,6 +59,28 @@ export function formatDate(value, options = CONFIG.DATE.DISPLAY_FORMAT) {
 }
 
 /**
+ * Formats a full timestamp (Date or ISO string) as "14 Aug 2026, 3:42:17 PM"
+ * so users see the exact hour:minute:second an entry was recorded, always in
+ * Pakistan (Asia/Karachi) time.
+ */
+export function formatDateTime(value) {
+  const date = value instanceof Date ? new Date(value.getTime()) : new Date(value);
+  if (Number.isNaN(date.getTime())) return '';
+  const datePart = date.toLocaleDateString(CONFIG.DATE.LOCALE, {
+    ...CONFIG.DATE.DISPLAY_FORMAT,
+    timeZone: 'Asia/Karachi',
+  });
+  const timePart = date.toLocaleTimeString(CONFIG.DATE.LOCALE, {
+    hour: '2-digit',
+    minute: '2-digit',
+    second: '2-digit',
+    hour12: true,
+    timeZone: 'Asia/Karachi',
+  });
+  return `${datePart}, ${timePart}`;
+}
+
+/**
  * Generates a reasonably-unique local ID, e.g. "exp_m3x9a1b2c".
  * Good enough for localStorage-based records (Phase 4). Will be swapped
  * for real database IDs once the backend exists (Phase 13+).

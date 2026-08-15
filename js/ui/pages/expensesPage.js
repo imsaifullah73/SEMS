@@ -8,7 +8,7 @@ import { confirmDialog } from '../components/ConfirmDialog.js';
 import { initSidebarToggle } from '../components/SidebarToggle.js';
 import { initThemeToggle } from '../components/ThemeToggle.js';
 import { requireAuth, renderUserAvatar, wireLogoutButton } from '../components/AuthGuard.js';
-import { formatCurrency, formatDate, qs, qsa, log, skeletonRowsHtml, errorBannerHtml, debounce, todayLocalDateString } from '../../core/utils.js';
+import { formatCurrency, formatDate, formatDateTime, qs, qsa, log, skeletonRowsHtml, errorBannerHtml, debounce, todayLocalDateString } from '../../core/utils.js';
 
 const storageAdapter = new ApiAdapter();
 const categoryRepository = new CategoryRepository(storageAdapter);
@@ -69,7 +69,7 @@ function renderExpenseTable(expenses, hasAnyExpenses = allExpenses.length > 0) {
     <tr data-expense-id="${expense.id}">
       <td><span class="badge" style="--badge-color: ${expense.category ? expense.category.color : '#6B7280'};">${expense.category ? expense.category.name : 'Uncategorized'}</span></td>
       <td>${expense.description}</td>
-      <td class="text-muted text-sm">${formatDate(expense.date)}</td>
+      <td class="text-muted text-sm">${expense.createdAt ? formatDateTime(expense.createdAt) : formatDate(expense.date)}</td>
       <td class="amount amount--negative" style="text-align:right;">${formatCurrency(expense.amount)}</td>
       <td style="text-align:right; white-space:nowrap;">
         <button type="button" class="icon-btn" data-action="edit" aria-label="Edit expense">Edit</button>
@@ -82,7 +82,7 @@ function renderExpenseTable(expenses, hasAnyExpenses = allExpenses.length > 0) {
 
   listEl.innerHTML = `
     <table class="table">
-      <thead><tr><th>Category</th><th>Description</th><th>Date</th><th style="text-align:right;">Amount</th><th></th></tr></thead>
+      <thead><tr><th>Category</th><th>Description</th><th>Date &amp; Time</th><th style="text-align:right;">Amount</th><th></th></tr></thead>
       <tbody>${rows}</tbody>
     </table>
   `;

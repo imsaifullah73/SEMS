@@ -7,7 +7,7 @@ import { ExpenseService } from '../../services/ExpenseService.js';
 import { IncomeService } from '../../services/IncomeService.js';
 import { BudgetService } from '../../services/BudgetService.js';
 import { DashboardService } from '../../services/DashboardService.js';
-import { formatCurrency, formatDate, qs, log, skeletonRowsHtml, errorBannerHtml } from '../../core/utils.js';
+import { formatCurrency, formatDate, formatDateTime, qs, log, skeletonRowsHtml, errorBannerHtml } from '../../core/utils.js';
 import { CONFIG } from '../../core/config.js';
 import { initSidebarToggle } from '../components/SidebarToggle.js';
 import { initThemeToggle } from '../components/ThemeToggle.js';
@@ -87,7 +87,7 @@ function renderRecentTransactions(transactions) {
         <tr>
           <td><span class="badge" style="--badge-color: ${badgeColor};">${categoryName}</span></td>
           <td>${tx.description}</td>
-          <td class="text-muted text-sm">${formatDate(tx.date)}</td>
+          <td class="text-muted text-sm">${tx.createdAt ? formatDateTime(tx.createdAt) : formatDate(tx.date)}</td>
           <td class="amount ${amountClass}" style="text-align:right;">${sign} ${formatCurrency(tx.amount)}</td>
         </tr>
       `;
@@ -97,7 +97,7 @@ function renderRecentTransactions(transactions) {
   container.innerHTML = `
     <table class="table">
       <thead>
-        <tr><th>Category</th><th>Description</th><th>Date</th><th style="text-align:right;">Amount</th></tr>
+<tr><th>Category</th><th>Description</th><th>Date &amp; Time</th><th style="text-align:right;">Amount</th></tr>
       </thead>
       <tbody>${rows}</tbody>
     </table>
@@ -148,8 +148,13 @@ async function init() {
 
   const greetingEl = qs('[data-dash="greeting"]');
   if (greetingEl) {
-    const hour = new Date().getHours();
-    const timeOfDay = hour < 12 ? 'Good morning' : hour < 18 ? 'Good afternoon' : 'Good evening';
+    const pkParts = new Intl.DateTimeFormat('en-GB', {
+      hour: 'numeric',
+      hour12: false,
+      timeZone: 'Asia/Karachi',
+    }).formatToParts(new Date());
+    const pkHour = Number(pkParts.find((p) => p.type === 'hour').value);
+    const timeOfDay = pkHour < 12 ? 'Good morning' : pkHour < 18 ? 'Good afternoon' : 'Good evening';
     const firstName = user.name ? user.name.split(' ')[0] : '';
     greetingEl.textContent = `${timeOfDay}${firstName ? ', ' + firstName : ''}`;
   }
