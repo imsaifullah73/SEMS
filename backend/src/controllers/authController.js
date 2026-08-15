@@ -10,7 +10,7 @@ import crypto from 'crypto';
 import { prisma } from '../config/prismaClient.js';
 import { generateToken } from '../utils/generateToken.js';
 import { DEFAULT_CATEGORIES } from '../utils/defaultCategories.js';
-import { sendOtpEmail } from '../utils/mailer.js';
+import { sendOtpEmail, sendWelcomeEmail } from '../utils/mailer.js';
 import { config } from '../config/env.js';
 
 const EMAIL_REGEX = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
@@ -159,6 +159,10 @@ export async function verifyOtp(req, res, next) {
     });
 
     const verified = await prisma.user.findUnique({ where: { id: user.id } });
+    sendWelcomeEmail(verified.email, verified.name).catch((err) => {
+      console.error('[SEMS API] Welcome email failed (non-fatal):', err.message);
+    });
+
     const token = generateToken(user.id, user.email);
     res.json({ user: sanitizeUser(verified), token });
   } catch (error) {
