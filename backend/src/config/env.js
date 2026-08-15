@@ -11,7 +11,10 @@ export const config = Object.freeze({
   port: process.env.PORT || 5000,
   nodeEnv: process.env.NODE_ENV || 'development',
   jwtSecret: process.env.JWT_SECRET || 'dev-only-fallback-secret-change-this',
-  resendApiKey: process.env.RESEND_API_KEY || '',
-  otpFromEmail: process.env.OTP_FROM_EMAIL || 'onboarding@resend.dev',
+  emailjsServiceId: process.env.EMAILJS_SERVICE_ID || '',
+  emailjsOtpTemplateId: process.env.EMAILJS_OTP_TEMPLATE_ID || '',
+  emailjsWelcomeTemplateId: process.env.EMAILJS_WELCOME_TEMPLATE_ID || '',
+  emailjsPublicKey: process.env.EMAILJS_PUBLIC_KEY || '',
+  emailjsPrivateKey: process.env.EMAILJS_PRIVATE_KEY || '',
   otpTtlMinutes: Number(process.env.OTP_TTL_MINUTES) || 10,
 });
