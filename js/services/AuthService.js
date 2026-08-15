@@ -76,7 +76,11 @@ export const AuthService = {
   },
 
   isAuthenticated() {
-    return Boolean(this.getToken());
+    const token = this.getToken();
+    if (!token || token === 'undefined' || token === 'null') {
+      return false;
+    }
+    return Boolean(this.getCurrentUser());
   },
 };
 
