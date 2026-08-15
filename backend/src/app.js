@@ -10,7 +10,6 @@ import routes from './routes/index.js';
 import authRoutes from './routes/authRoutes.js';
 import { notFound } from './middleware/notFound.js';
 import { errorHandler } from './middleware/errorHandler.js';
-import { config } from './config/env.js';
 
 const app = express();
 
@@ -23,28 +22,6 @@ app.get('/', (req, res) => {
 
 app.get('/api/health', (req, res) => {
   res.json({ status: 'ok' });
-});
-
-app.get('/api/diag/email', (req, res) => {
-  const c = config;
-  res.json({
-    serviceSet: Boolean(c.emailjsServiceId),
-    otpTemplateSet: Boolean(c.emailjsOtpTemplateId),
-    welcomeTemplateSet: Boolean(c.emailjsWelcomeTemplateId),
-    publicKeySet: Boolean(c.emailjsPublicKey),
-    privateKeySet: Boolean(c.emailjsPrivateKey),
-  });
-});
-
-app.get('/api/diag/email-test', async (req, res) => {
-  try {
-    const { sendOtpEmail, sendWelcomeEmail } = await import('./utils/mailer.js');
-    const otpRes = await sendOtpEmail('imsaifullah73@gmail.com', '000000').catch((e) => `OTP FAIL: ${e.message}`);
-    const welRes = await sendWelcomeEmail('imsaifullah73@gmail.com', 'Ali').catch((e) => `WELCOME FAIL: ${e.message}`);
-    res.json({ ok: true, otpRes, welRes });
-  } catch (error) {
-    res.json({ ok: false, error: error.message });
-  }
 });
 
 app.use('/api/auth', authRoutes);
