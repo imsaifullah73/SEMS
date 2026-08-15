@@ -15,7 +15,7 @@ export const CONFIG = Object.freeze({
   },
 
   API: {
-    BASE_URL: 'http://localhost:5000/api',
+    BASE_URL: 'https://sems-production-0982.up.railway.app/api',
   },
 
   STORAGE_PREFIX: 'sems_',
