@@ -20,6 +20,10 @@ app.get('/', (req, res) => {
   res.json({ message: 'SEMS API is running.', version: '0.3.0' });
 });
 
+app.get('/api/health', (req, res) => {
+  res.json({ status: 'ok' });
+});
+
 app.use('/api/auth', authRoutes);
 app.use('/api', routes);
 
