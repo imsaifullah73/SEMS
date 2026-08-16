@@ -25,10 +25,12 @@
   --primary: var(--color-indigo-600);
   --primary-hover: var(--color-indigo-700);
   --primary-subtle: var(--color-indigo-100);
+  --primary-soft: rgba(43, 52, 103, 0.12);
 
   --secondary: var(--color-gold-500);
   --secondary-hover: var(--color-gold-600);
   --secondary-subtle: var(--color-gold-100);
+  --secondary-soft: rgba(212, 160, 23, 0.14);
 
   /* Status */
   --success: var(--color-emerald-600);

@@ -9,7 +9,9 @@
   position: sticky;
   top: 0;
   z-index: var(--z-sticky);
-  background: var(--bg);
+  background: color-mix(in srgb, var(--bg) 80%, transparent);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
   border-bottom: 1px solid var(--border);
 }
 
@@ -75,11 +77,51 @@
 
 /* ---------- Hero ---------- */
 .landing-hero {
+  position: relative;
+  overflow: hidden;
   background:
-    radial-gradient(1200px 600px at 80% -10%, var(--primary-soft, rgba(43, 52, 103, 0.15)), transparent 60%),
+    radial-gradient(900px 520px at 15% -10%, var(--primary-soft, rgba(43, 52, 103, 0.35)), transparent 55%),
+    radial-gradient(700px 420px at 90% 10%, var(--secondary-soft, rgba(212, 160, 23, 0.25)), transparent 55%),
     var(--bg);
-  padding: var(--space-16) var(--space-4);
+  padding: var(--space-20, 5rem) var(--space-4);
   text-align: center;
+}
+
+.landing-hero::before,
+.landing-hero::after {
+  content: '';
+  position: absolute;
+  border-radius: 50%;
+  filter: blur(70px);
+  opacity: 0.5;
+  pointer-events: none;
+}
+.landing-hero::before {
+  width: 340px;
+  height: 340px;
+  top: -90px;
+  left: -80px;
+  background: var(--primary-soft, rgba(43, 52, 103, 0.5));
+}
+.landing-hero::after {
+  width: 300px;
+  height: 300px;
+  bottom: -100px;
+  right: -60px;
+  background: var(--secondary-soft, rgba(212, 160, 23, 0.45));
+}
+
+.landing-hero__inner {
+  position: relative;
+  z-index: 1;
+  max-width: 760px;
+  margin: 0 auto;
+  animation: landing-fade-up 0.7s ease both;
+}
+
+@keyframes landing-fade-up {
+  from { opacity: 0; transform: translateY(24px); }
+  to   { opacity: 1; transform: translateY(0); }
 }
 
 .landing-hero__inner {
@@ -95,18 +137,26 @@
   letter-spacing: 0.08em;
   text-transform: uppercase;
   color: var(--primary);
-  margin-bottom: var(--space-3);
+  background: var(--primary-subtle, var(--color-indigo-100));
+  padding: var(--space-1) var(--space-3);
+  border-radius: var(--radius-full);
+  margin-bottom: var(--space-4);
 }
 
 .landing-hero__title {
   font-family: var(--font-display);
-  font-size: clamp(1.8rem, 5vw, 3rem);
+  font-size: clamp(1.8rem, 5vw, 3.2rem);
   line-height: var(--line-height-tight);
   margin-bottom: var(--space-4);
+  background: linear-gradient(120deg, var(--text-primary), var(--primary));
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
 }
 
 .landing-hero__title span {
   color: var(--primary);
+  -webkit-text-fill-color: currentColor;
 }
 
 .landing-hero__subtitle {
@@ -135,11 +185,16 @@
   display: flex;
   flex-direction: column;
   gap: var(--space-1);
+  padding: var(--space-3) var(--space-6);
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-lg);
+  box-shadow: var(--shadow-md);
 }
 .stat-card--mini strong {
   font-size: var(--font-size-2xl);
   font-family: var(--font-mono);
-  color: var(--text-primary);
+  color: var(--primary);
 }
 .stat-card--mini span {
   color: var(--text-secondary);
@@ -169,6 +224,17 @@
   grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
   gap: var(--space-4);
 }
+.feature-card {
+  border: 1px solid var(--border);
+  border-radius: var(--radius-lg);
+  background: var(--surface);
+  transition: transform var(--transition-base), box-shadow var(--transition-base), border-color var(--transition-base);
+}
+.feature-card:hover {
+  transform: translateY(-6px);
+  box-shadow: var(--shadow-lg);
+  border-color: var(--primary);
+}
 .feature-card__icon {
   font-size: 2rem;
   margin-bottom: var(--space-3);
@@ -192,13 +258,22 @@
   display: flex;
   gap: var(--space-4);
   align-items: flex-start;
+  padding: var(--space-4);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-lg);
+  background: var(--surface);
+  transition: transform var(--transition-base), box-shadow var(--transition-base);
+}
+.benefit-row:hover {
+  transform: translateX(6px);
+  box-shadow: var(--shadow-md);
 }
 .benefit-row__check {
   flex-shrink: 0;
   width: 28px;
   height: 28px;
   border-radius: 50%;
-  background: var(--success, #1F9D5C);
+  background: linear-gradient(135deg, var(--success, #1F9D5C), var(--emerald-600, #15803D));
   color: #fff;
   display: inline-flex;
   align-items: center;
@@ -221,13 +296,17 @@
   align-items: flex-start;
   padding: var(--space-8);
   flex-wrap: wrap;
+  border: 1px solid var(--border);
+  border-radius: var(--radius-xl);
+  background: var(--surface);
+  box-shadow: var(--shadow-md);
 }
 .about-card__mark {
   flex-shrink: 0;
   width: 84px;
   height: 84px;
   border-radius: var(--radius-xl);
-  background: linear-gradient(135deg, var(--primary), var(--primary-hover, var(--primary)));
+  background: linear-gradient(135deg, var(--primary), var(--secondary, var(--color-gold-500)));
   color: #fff;
   font-family: var(--font-display);
   font-weight: var(--font-weight-bold);
@@ -258,6 +337,14 @@
   display: flex;
   flex-direction: column;
   gap: var(--space-3);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-lg);
+  background: var(--surface);
+  transition: transform var(--transition-base), box-shadow var(--transition-base);
+}
+.testimonial-card:hover {
+  transform: translateY(-6px);
+  box-shadow: var(--shadow-lg);
 }
 .testimonial-card__stars {
   color: var(--gold, #D4A017);
@@ -286,7 +373,7 @@
   width: 36px;
   height: 36px;
   border-radius: 50%;
-  background: var(--primary);
+  background: linear-gradient(135deg, var(--primary), var(--secondary, var(--color-gold-500)));
   color: #fff;
   display: flex;
   align-items: center;
@@ -297,6 +384,9 @@
 
 .comment-form-card {
   margin-bottom: var(--space-6);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-lg);
+  background: var(--surface);
 }
 .comment-form-card textarea {
   resize: vertical;
@@ -309,6 +399,9 @@
 }
 .comment-item {
   padding: var(--space-5);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-lg);
+  background: var(--surface);
 }
 .comment__header {
   display: flex;
@@ -320,7 +413,7 @@
   width: 40px;
   height: 40px;
   border-radius: 50%;
-  background: var(--primary);
+  background: linear-gradient(135deg, var(--primary), var(--secondary, var(--color-gold-500)));
   color: #fff;
   display: flex;
   align-items: center;

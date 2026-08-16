@@ -11,6 +11,10 @@
   margin-bottom: var(--space-8);
 }
 
+.quick-actions .btn {
+  box-shadow: var(--shadow-sm);
+}
+
 [data-dash="recent-list"] {
   overflow-x: auto;
 }

@@ -2,40 +2,25 @@ import { CommentService } from '../../services/CommentService.js';
 import { initThemeToggle } from '../components/ThemeToggle.js';
 import { qs } from '../../core/utils.js';
 
-const TESTIMONIALS = [
-  {
-    author: 'Elon Musk',
-    role: 'Founder, Tesla & SpaceX',
-    text: 'Track every expense, build real discipline. This is how you turn small money into a big future. Impressive tool.',
-  },
-  {
-    author: 'Bill Gates',
-    role: 'Co-founder, Microsoft',
-    text: 'Students who learn to manage money early win later. SEMS makes budgeting as simple as a conversation.',
-  },
-  {
-    author: 'Jeff Bezos',
-    role: 'Founder, Amazon',
-    text: 'Day one mindset. Starting financial control today is the most valuable habit a student can build.',
-  },
-  {
-    author: 'Mark Zuckerberg',
-    role: 'Co-founder, Meta',
-    text: 'Simple, fast, and genuinely useful. I wish I had this when I was in college.',
-  },
-];
-
-function renderTestimonials() {
+function renderTestimonials(comments) {
   const container = qs('[data-testimonials]');
   if (!container) return;
-  container.innerHTML = TESTIMONIALS.map(
+
+  const testimonials = (comments || []).filter((c) => !c.isReply).slice(0, 4);
+
+  if (!testimonials.length) {
+    container.innerHTML = '<div class="card testimonial-card"><p class="testimonial-card__text">No testimonials yet. Be the first to share your experience!</p></div>';
+    return;
+  }
+
+  container.innerHTML = testimonials.map(
     (t) => `
       <div class="card testimonial-card">
         <div class="testimonial-card__stars">★★★★★</div>
-        <p class="testimonial-card__text">"${t.text}"</p>
+        <p class="testimonial-card__text">"${escapeHtml(t.text)}"</p>
         <div class="testimonial-card__footer">
-          <div class="testimonial-card__avatar">${t.author.split(' ').map((w) => w[0]).slice(0, 2).join('').toUpperCase()}</div>
-          <div><strong>${t.author}</strong><span>${t.role}</span></div>
+          <div class="testimonial-card__avatar">${escapeHtml(t.author.split(' ').map((w) => w[0]).slice(0, 2).join('').toUpperCase())}</div>
+          <div><strong>${escapeHtml(t.author)}</strong><span>Verified Student</span></div>
         </div>
       </div>
     `
@@ -184,15 +169,15 @@ async function loadComments() {
     container.innerHTML = '<p class="text-muted">Could not load comments.</p>';
     return;
   }
-  renderCommentList(result.data.comments || []);
+  const comments = result.data.comments || [];
+  renderCommentList(comments);
+  renderTestimonials(comments);
 }
 
 function init() {
   initThemeToggle();
   const yearEl = qs('[data-year]');
   if (yearEl) yearEl.textContent = String(new Date().getFullYear());
-
-  renderTestimonials();
 
   const form = qs('[data-comment-form]');
   if (form) form.addEventListener('submit', handleCommentSubmit);
