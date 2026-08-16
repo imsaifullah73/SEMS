@@ -56,6 +56,14 @@ export const AuthService = {
     return postAuth('/auth/resend-otp', { email });
   },
 
+  async forgotPassword(email) {
+    return postAuth('/auth/forgot-password', { email });
+  },
+
+  async resetPassword({ email, otp, newPassword }) {
+    return postAuth('/auth/reset-password', { email, otp, newPassword });
+  },
+
   logout() {
     localStorage.removeItem(TOKEN_KEY);
     localStorage.removeItem(USER_KEY);

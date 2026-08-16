@@ -54,3 +54,14 @@ export async function sendWelcomeEmail(toEmail, name) {
     params: { name },
   });
 }
+
+export async function sendResetPasswordEmail(toEmail, otp) {
+  if (!config.emailjsResetPasswordTemplateId) {
+    throw new Error('EMAILJS_RESET_PASSWORD_TEMPLATE_ID is not configured.');
+  }
+  return sendTemplate({
+    templateId: config.emailjsResetPasswordTemplateId,
+    toEmail,
+    params: { otp },
+  });
+}

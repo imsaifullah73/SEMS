@@ -2,6 +2,7 @@ import { AuthService } from '../../services/AuthService.js';
 import { qs } from '../../core/utils.js';
 import { initThemeToggle } from '../components/ThemeToggle.js';
 import { initPasswordToggles } from '../components/PasswordToggle.js';
+import { openForgotPassword } from '../components/ForgotPassword.js';
 
 function showError(message) {
   const el = qs('[data-auth-error]');
@@ -104,6 +105,14 @@ function init() {
 
   const resendBtn = qs('[data-resend-otp]');
   if (resendBtn) resendBtn.addEventListener('click', handleResend);
+
+  const forgotLink = qs('[data-forgot-password]');
+  if (forgotLink) {
+    forgotLink.addEventListener('click', (e) => {
+      e.preventDefault();
+      openForgotPassword();
+    });
+  }
 }
 
 document.addEventListener('DOMContentLoaded', init);

@@ -10,7 +10,7 @@ import crypto from 'crypto';
 import { prisma } from '../config/prismaClient.js';
 import { generateToken } from '../utils/generateToken.js';
 import { DEFAULT_CATEGORIES } from '../utils/defaultCategories.js';
-import { sendOtpEmail, sendWelcomeEmail } from '../utils/mailer.js';
+import { sendOtpEmail, sendWelcomeEmail, sendResetPasswordEmail } from '../utils/mailer.js';
 import { config } from '../config/env.js';
 
 const EMAIL_REGEX = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
@@ -189,6 +189,100 @@ export async function resendOtp(req, res, next) {
 
     await issueOtp(user);
     res.json({ message: 'A new verification code has been sent to your email.' });
+  } catch (error) {
+    next(error);
+  }
+}
+
+export async function forgotPassword(req, res, next) {
+  try {
+    const { email } = req.body;
+    const normalizedEmail = typeof email === 'string' ? email.toLowerCase().trim() : '';
+
+    // Validate email format. We still return the SAME generic success
+    // response regardless of outcome to prevent account enumeration.
+    if (!normalizedEmail || !EMAIL_REGEX.test(normalizedEmail)) {
+      return res.json({ message: 'If that email exists, a password reset code has been sent.' });
+    }
+
+    const user = await prisma.user.findUnique({ where: { email: normalizedEmail } });
+
+    // Only verified users can reset. Non-verified / non-existing users get the
+    // same generic response so attackers cannot tell accounts apart.
+    if (!user || !user.emailVerified) {
+      return res.json({ message: 'If that email exists, a password reset code has been sent.' });
+    }
+
+    const otp = generateOtp();
+    const otpHash = await bcrypt.hash(otp, 10);
+    const otpExpiresAt = new Date(Date.now() + config.otpTtlMinutes * 60 * 1000);
+
+    await prisma.user.update({
+      where: { id: user.id },
+      data: { passwordResetOtpHash: otpHash, passwordResetOtpExpiresAt: otpExpiresAt },
+    });
+
+    await sendResetPasswordEmail(user.email, otp);
+
+    res.json({ message: 'If that email exists, a password reset code has been sent.' });
+  } catch (error) {
+    next(error);
+  }
+}
+
+export async function resetPassword(req, res, next) {
+  try {
+    const { email, otp, newPassword } = req.body;
+    const normalizedEmail = typeof email === 'string' ? email.toLowerCase().trim() : '';
+    const errors = {};
+
+    if (!normalizedEmail || !EMAIL_REGEX.test(normalizedEmail)) {
+      errors.email = 'A valid email is required.';
+    }
+    if (!otp || typeof otp !== 'string' || otp.trim().length !== 6) {
+      errors.otp = 'A valid 6-digit verification code is required.';
+    }
+    if (!newPassword || typeof newPassword !== 'string' || newPassword.length < 6) {
+      errors.newPassword = 'Password must be at least 6 characters.';
+    }
+
+    if (Object.keys(errors).length > 0) {
+      return res.status(400).json({ errors });
+    }
+
+    const user = await prisma.user.findUnique({ where: { email: normalizedEmail } });
+    if (!user || !user.passwordResetOtpHash || !user.passwordResetOtpExpiresAt) {
+      return res.status(400).json({ errors: { otp: 'Invalid or expired verification code.' } });
+    }
+
+    // Expired reset OTPs are rejected AND cleared so a stale token cannot be
+    // reused after invalidation.
+    if (user.passwordResetOtpExpiresAt < new Date()) {
+      await prisma.user.update({
+        where: { id: user.id },
+        data: { passwordResetOtpHash: null, passwordResetOtpExpiresAt: null },
+      });
+      return res.status(400).json({ errors: { otp: 'This verification code has expired. Please request a new one.' } });
+    }
+
+    const otpMatches = await bcrypt.compare(otp.trim(), user.passwordResetOtpHash);
+    if (!otpMatches) {
+      return res.status(400).json({ errors: { otp: 'Invalid verification code.' } });
+    }
+
+    // Single-use: hash + expiry cleared immediately, BEFORE the update, so a
+    // reused code can never reset again.
+    const newPasswordHash = await bcrypt.hash(newPassword, 10);
+    await prisma.user.update({
+      where: { id: user.id },
+      data: {
+        passwordHash: newPasswordHash,
+        passwordResetOtpHash: null,
+        passwordResetOtpExpiresAt: null,
+      },
+    });
+
+    res.json({ message: 'Your password has been reset. You can now log in.' });
   } catch (error) {
     next(error);
   }
