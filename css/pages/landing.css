@@ -143,6 +143,18 @@
   margin-bottom: var(--space-4);
 }
 
+/* App name badge on the hero — big and clear so everyone knows what SEMS is */
+.landing-hero__appname {
+  font-family: var(--font-display);
+  font-size: var(--font-size-lg);
+  letter-spacing: 0.05em;
+  padding: var(--space-2) var(--space-5);
+  background: linear-gradient(135deg, var(--primary-subtle, var(--color-indigo-100)), var(--secondary-subtle, var(--color-gold-100)));
+  border: 1px solid var(--primary);
+  box-shadow: var(--shadow-md);
+  margin-bottom: var(--space-5);
+}
+
 .landing-hero__title {
   font-family: var(--font-display);
   font-size: clamp(1.8rem, 5vw, 3.2rem);
