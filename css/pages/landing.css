@@ -326,6 +326,60 @@
   margin-bottom: var(--space-6);
 }
 
+/* ---------- User Manual / Guide ---------- */
+.guide-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+  gap: var(--space-4);
+  margin-bottom: var(--space-6);
+}
+.guide-card {
+  position: relative;
+  border: 1px solid var(--border);
+  border-radius: var(--radius-lg);
+  background: var(--surface);
+  transition: transform var(--transition-base), box-shadow var(--transition-base), border-color var(--transition-base);
+}
+.guide-card:hover {
+  transform: translateY(-6px);
+  box-shadow: var(--shadow-lg);
+  border-color: var(--primary);
+}
+.guide-card__step {
+  width: 36px;
+  height: 36px;
+  border-radius: 50%;
+  background: linear-gradient(135deg, var(--primary), var(--secondary, var(--color-gold-500)));
+  color: var(--text-on-primary);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-family: var(--font-display);
+  font-weight: var(--font-weight-bold);
+  font-size: var(--font-size-base);
+  margin-bottom: var(--space-3);
+  box-shadow: var(--shadow-sm);
+}
+.guide-card h3 {
+  font-family: var(--font-display);
+  margin-bottom: var(--space-2);
+}
+.guide-card p {
+  color: var(--text-secondary);
+  font-size: var(--font-size-sm);
+  line-height: var(--line-height-relaxed);
+}
+.guide-card strong {
+  color: var(--text-primary);
+}
+.guide-tip {
+  border: 1px dashed var(--primary);
+  background: var(--primary-subtle, var(--color-indigo-100));
+  color: var(--text-primary);
+  font-size: var(--font-size-sm);
+  line-height: var(--line-height-relaxed);
+}
+
 /* ---------- Comments ---------- */
 .testimonial-grid {
   display: grid;
