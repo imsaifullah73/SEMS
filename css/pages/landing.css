@@ -155,58 +155,6 @@
   margin-bottom: var(--space-5);
 }
 
-/* Big SEMS brand name in the hero — like a famous software logo */
-.landing-hero__brand {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  gap: var(--space-4);
-  margin-bottom: var(--space-5);
-}
-.landing-hero__brand-mark {
-  width: clamp(56px, 9vw, 88px);
-  height: clamp(56px, 9vw, 88px);
-  border-radius: var(--radius-xl);
-  background: linear-gradient(135deg, var(--primary), var(--secondary, var(--color-gold-500)));
-  color: var(--text-on-primary);
-  font-family: var(--font-display);
-  font-weight: var(--font-weight-bold);
-  font-size: clamp(2rem, 5vw, 3.2rem);
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  box-shadow: 0 16px 40px var(--primary-soft, rgba(43, 52, 103, 0.45));
-}
-.landing-hero__brand-name {
-  font-family: var(--font-display);
-  font-weight: var(--font-weight-bold);
-  font-size: clamp(2rem, 7vw, 4rem);
-  line-height: 1.05;
-  letter-spacing: 0.01em;
-  text-align: center;
-  background: linear-gradient(120deg, var(--primary), var(--secondary, var(--color-gold-500)));
-  -webkit-background-clip: text;
-  background-clip: text;
-  -webkit-text-fill-color: transparent;
-}
-.landing-hero__tagline {
-  display: inline-block;
-  font-family: var(--font-display);
-  font-size: clamp(1rem, 2.5vw, 1.4rem);
-  font-weight: var(--font-weight-semibold);
-  letter-spacing: 0.06em;
-  color: var(--text-secondary);
-  text-transform: uppercase;
-  padding: var(--space-2) var(--space-5);
-  background: color-mix(in srgb, var(--surface) 75%, transparent);
-  backdrop-filter: blur(8px);
-  -webkit-backdrop-filter: blur(8px);
-  border: 1px solid var(--border);
-  border-radius: var(--radius-full);
-  margin-bottom: var(--space-8);
-}
-
 .landing-hero__title {
   font-family: var(--font-display);
   font-size: clamp(1.8rem, 5vw, 3.2rem);
