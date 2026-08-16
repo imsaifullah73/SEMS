@@ -56,11 +56,15 @@ export async function sendWelcomeEmail(toEmail, name) {
 }
 
 export async function sendResetPasswordEmail(toEmail, otp) {
-  if (!config.emailjsResetPasswordTemplateId) {
-    throw new Error('EMAILJS_RESET_PASSWORD_TEMPLATE_ID is not configured.');
+  // Reuse the existing OTP template when a dedicated reset-password template
+  // isn't configured — they send the same 6-digit code, so no new EmailJS
+  // template (and no plan upgrade) is required.
+  const templateId = config.emailjsResetPasswordTemplateId || config.emailjsOtpTemplateId;
+  if (!templateId) {
+    throw new Error('EMAILJS_OTP_TEMPLATE_ID / EMAILJS_RESET_PASSWORD_TEMPLATE_ID is not configured.');
   }
   return sendTemplate({
-    templateId: config.emailjsResetPasswordTemplateId,
+    templateId,
     toEmail,
     params: { otp },
   });
