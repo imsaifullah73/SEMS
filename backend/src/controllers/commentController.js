@@ -33,9 +33,16 @@ export async function listComments(req, res, next) {
       const filtered = c.blocked ? { ...c, replies: c.replies.filter((r) => !r.blocked) } : c;
       return filtered;
     });
+
+    // Public visitors only ever see the owner's curated testimonials.
+    // Real user comments are hidden from the public and only visible to the
+    // owner (admin) account so the page always looks clean and professional.
     if (!isOwner(req)) {
+      visible = visible.filter((c) => !c.blocked && c.isOwner);
+    } else {
       visible = visible.filter((c) => !c.blocked);
     }
+
     res.json({ comments: visible.map(sanitize) });
   } catch (error) {
     next(error);
