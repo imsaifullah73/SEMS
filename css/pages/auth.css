@@ -49,3 +49,52 @@
   color: var(--text-secondary);
   margin-top: var(--space-4);
 }
+
+/* Password show/hide toggle */
+.password-field {
+  position: relative;
+}
+.password-field .form-input {
+  padding-right: 3rem;
+}
+.password-toggle {
+  position: absolute;
+  top: 50%;
+  right: var(--space-2);
+  transform: translateY(-50%);
+  width: 2rem;
+  height: 2rem;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: var(--radius-sm);
+  color: var(--text-secondary);
+  cursor: pointer;
+  transition: color var(--transition-fast), background-color var(--transition-fast);
+}
+.password-toggle:hover {
+  color: var(--text-primary);
+  background: var(--surface-alt);
+}
+.password-toggle:focus-visible {
+  outline: none;
+  box-shadow: var(--shadow-focus);
+}
+.password-toggle__icon {
+  width: 20px;
+  height: 20px;
+  fill: none;
+  stroke: currentColor;
+  stroke-width: 1.8;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+}
+.password-toggle__icon--eye-off {
+  display: none;
+}
+.password-field.is-visible .password-toggle__icon--eye {
+  display: none;
+}
+.password-field.is-visible .password-toggle__icon--eye-off {
+  display: block;
+}

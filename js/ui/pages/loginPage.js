@@ -1,6 +1,7 @@
 import { AuthService } from '../../services/AuthService.js';
 import { qs } from '../../core/utils.js';
 import { initThemeToggle } from '../components/ThemeToggle.js';
+import { initPasswordToggles } from '../components/PasswordToggle.js';
 
 function showError(message) {
   const el = qs('[data-auth-error]');
@@ -90,6 +91,7 @@ async function handleResend() {
 
 function init() {
   initThemeToggle();
+  initPasswordToggles();
   if (AuthService.isAuthenticated()) {
     window.location.href = 'dashboard.html';
     return;

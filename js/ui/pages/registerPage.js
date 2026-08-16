@@ -1,6 +1,7 @@
 import { AuthService } from '../../services/AuthService.js';
 import { qs, qsa } from '../../core/utils.js';
 import { initThemeToggle } from '../components/ThemeToggle.js';
+import { initPasswordToggles } from '../components/PasswordToggle.js';
 
 function showFieldErrors(form, errors) {
   qsa('.form-error', form).forEach((el) => (el.textContent = ''));
@@ -92,6 +93,7 @@ async function handleResend() {
 
 function init() {
   initThemeToggle();
+  initPasswordToggles();
   if (AuthService.isAuthenticated()) {
     window.location.href = 'dashboard.html';
     return;
