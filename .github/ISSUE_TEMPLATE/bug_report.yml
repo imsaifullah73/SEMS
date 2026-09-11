@@ -1,0 +1,41 @@
+name: Bug report
+description: Something is broken. Tell me what and why.
+labels: [bug]
+body:
+  - type: input
+    id: url
+    attributes:
+      label: Where did you see it?
+      description: Link to the page (use the live demo URL or a localhost one) and which browser.
+    validations:
+      required: true
+  - type: textarea
+    id: what-happened
+    attributes:
+      label: What happened?
+      description: What you expected vs what actually happened.
+    validations:
+      required: true
+  - type: textarea
+    id: reproduce
+    attributes:
+      label: How to reproduce
+      placeholder: |
+        1. Go to ...
+        2. Click ...
+        3. See error
+      render: bash
+    validations:
+      required: true
+  - type: checkbox
+    id: selfserve
+    attributes:
+      label: I've done the obvious stuff
+      options:
+        - label: I checked that this isn't already in the Issues tab
+        - label: I'm on the latest commit
+  - type: textarea
+    id: notes
+    attributes:
+      label: Anything else?
+      description: Console errors, screenshots, or whatever context helps.

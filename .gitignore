@@ -22,3 +22,7 @@ Thumbs.db
 # Editor
 .vscode/
 .idea/
+.history/
+
+# Local-only start scripts output
+start-*.log

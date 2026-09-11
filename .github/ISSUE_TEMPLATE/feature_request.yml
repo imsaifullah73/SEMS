@@ -1,0 +1,33 @@
+name: Feature request
+description: Something you'd like SEMS to do.
+labels: [enhancement]
+body:
+  - type: textarea
+    id: problem
+    attributes:
+      label: What's the problem you're solving?
+      description: A sentence or two about the real-world need. "It's annoying to..." beats "Add a button for...".
+    validations:
+      required: true
+  - type: textarea
+    id: idea
+    attributes:
+      label: Your idea
+      description: How you'd imagine it working. Wireframe sketches are welcome.
+    validations:
+      required: true
+  - type: dropdown
+    id: scale
+    attributes:
+      label: Rough size
+      options:
+        - Small (a few hours)
+        - Medium (a weekend)
+        - Big (a week or more)
+    validations:
+      required: true
+  - type: textarea
+    id: notes
+    attributes:
+      label: Anything else
+      description: Prior art, links, screenshots — whatever you've got.
