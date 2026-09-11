@@ -1,8 +1,24 @@
-# SEMS - Student Expense Management System
+# SEMS — Student Expense Management System
 
-A full-stack expense tracker built for students. No banking bloat, just the basics - recording expenses and income, setting budgets you can actually stick to, and charts that make your spending easy to understand.
+A full-stack expense tracker built for students. No banking bloat — just recording expenses and income, setting budgets you can actually stick to, and charts that make your spending easy to understand.
 
-Live demo: https://sems-production-0982.up.railway.app/
+**Live demo:** https://sems-production-0982.up.railway.app/
+
+![Version](https://img.shields.io/badge/version-0.4.0-informational)
+![JS](https://img.shields.io/badge/JS-ES%20Modules-yellow)
+![No Framework](https://img.shields.io/badge/frontend-vanilla-orange)
+![Node](https://img.shields.io/badge/Node.js-18-green)
+![Express](https://img.shields.io/badge/Express-4-blue)
+![DB](https://img.shields.io/badge/PostgreSQL-316192)
+![Prisma](https://img.shields.io/badge/Prisma-5-blueviolet)
+![License](https://img.shields.io/badge/license-MIT-green)
+![PRs](https://img.shields.io/badge/PRs-welcome-brightgreen)
+
+---
+
+## Why I built this
+
+I'm a student. Every money app I tried was either a corporate dashboard wearing a friendly skin, or it demanded bank-account access I didn't want to give it. So I built my own. This started as "I need to track my mess bills" and kept growing — it's now a REST backend with JWT auth, OTP email verification, and a production deployment on Railway. All of it built one phase at a time, no framework, no build step.
 
 ## Features
 
@@ -15,7 +31,7 @@ Live demo: https://sems-production-0982.up.railway.app/
 - One overall monthly budget for keeping the whole month in check
 - Per-category limits (food, transport, books) with their own ceilings
 - Progress bars that change color as you approach the limit
-- Warning the moment you cross the line
+- A warning the moment you cross the line
 
 **Reports**
 - Income vs expense charts bucketed by day, week, month or year
@@ -29,8 +45,8 @@ Live demo: https://sems-production-0982.up.railway.app/
 - All passwords and OTPs hashed with bcrypt
 
 **Extras**
-- Light and dark themes backed by a CSS token system, persisted per user
-- Accessible UI - focus-trapped modals, keyboard navigation, aria labels
+- Light and dark themes backed by CSS design tokens, persisted per user
+- Accessible UI — focus-trapped modals, keyboard navigation, aria labels
 - Public testimonials and a feedback form with profanity + spam filtering
 - Founder controls to reply to or block comments
 
@@ -38,7 +54,7 @@ Live demo: https://sems-production-0982.up.railway.app/
 
 | Layer | Technology |
 | --- | --- |
-| Frontend | Vanilla HTML5, CSS3, JavaScript (ES Modules) - no framework, no build step |
+| Frontend | Vanilla HTML5, CSS3, JavaScript (ES Modules) — no framework, no build step |
 | Charts | Chart.js 4 via CDN |
 | Backend | Node.js + Express 4 REST API |
 | Database | PostgreSQL (SQLite dev fallback) |
@@ -99,7 +115,7 @@ Page Controller -> Service (validation) -> Repository -> Storage Adapter -> API 
 A few choices worth mentioning:
 
 - The `StorageAdapter` interface lets the whole app switch between localStorage and the REST API without touching a single repository. That is literally how this project grew from a client-side app into a full-stack deployment.
-- An event bus (`eventBus.js`) keeps modules decoupled - the budget page listens for `expense:created` and re-renders on its own, no tangled imports.
+- An event bus (`eventBus.js`) keeps modules decoupled — the budget page listens for `expense:created` and re-renders on its own, no tangled imports.
 - Every protected page runs through an `AuthGuard` that checks the JWT before any UI renders.
 
 The project was built in 15 deliberate phases (the code comments track this), each feature landing as its own milestone, which is probably why it never turned into a mess.
@@ -172,23 +188,26 @@ Base URL: `/api`
 | GET/POST/PUT/DELETE | `/budgets` | Budget CRUD, month-scoped | token |
 | GET/POST | `/comments` | Public feedback | - |
 
-## Database
+## Database & Security
 
-Six core models: `User`, `Category`, `Expense`, `Income`, `Budget`, `Comment` (self-referencing for replies). Every financial record carries a `userId` foreign key, and the store layer appends an `extraWhere` guard so no query leaks data across users - even if someone guesses an id.
+Six core models: `User`, `Category`, `Expense`, `Income`, `Budget`, `Comment` (self-referencing for replies). Every financial record carries a `userId` foreign key, and the store layer appends an `extraWhere` guard so no query leaks data across users — even if someone guesses an id.
 
-10 default categories are seeded automatically at registration.
+10 default categories are seeded automatically at registration. Passwords and OTP codes are hashed before they hit the database.
 
-## What I'm Happy About
+## Things I'm Happy About
 
-- Every page has its own controller, service and repository - no 2,000-line script tags.
+- Every page has its own controller, service and repository — no 2,000-line script tags.
 - The localStorage -> live API swap required zero repository changes when the backend landed.
 - Real validation on every form field, not just HTML `required` attributes.
-- Modals, toasts and dialogs built from scratch - accessible, focus-trapped, keyboard-friendly.
+- Modals, toasts and dialogs built from scratch — accessible, focus-trapped, keyboard-friendly.
 - Money math respects the user's timezone (PK), not the server's.
 
-## Testing
+## Honest Trade-offs
 
-No automated test suite yet - that is honestly the next item on the list. Validation lives inside services specifically so it can be unit-tested without touching the DOM. If you want to help with that, PRs are very welcome.
+- No automated test suite yet — that is genuinely the next item on the list.
+- Vanilla JS is a deliberate choice. React would have been overkill for this scope, and I wanted to prove I understand the DOM before leaning on a framework.
+- Email goes through EmailJS to keep infra costs at zero; it degrades gracefully when not configured, but a dedicated SMTP provider would be more reliable.
+- Design tokens live in plain CSS. They'd move to a JSON + build step if the theme system ever gets bigger.
 
 ## Roadmap
 
@@ -201,13 +220,11 @@ No automated test suite yet - that is honestly the next item on the list. Valida
 
 ## License
 
-MIT - use it, learn from it, build on it.
+MIT — use it, learn from it, build on it. See [LICENSE](LICENSE).
 
 ## About the Author
 
-Built and maintained by Saif Ullah (imsaifullah73@gmail.com). A student who got tired of apps making personal finance feel like a corporate dashboard, so he built one for students instead. This project started as "I need to track my mess bills" and grew into a REST backend, OTP email verification, and a Railway deployment - one phase at a time.
-
-Questions, feedback, internship offers: imsaifullah73@gmail.com
+Built and maintained by Saif Ullah ([imsaifullah73@gmail.com](mailto:imsaifullah73@gmail.com)). A student who got tired of apps making personal finance feel like a corporate dashboard, so he built one for students instead. Questions, feedback, internship offers — all welcome.
 
 ## Support
 
